@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 
 void main() {
   runApp(const MainApp());
@@ -19,7 +20,7 @@ class MainApp extends StatelessWidget {
         home: Scaffold(
           body: Center(
             child: CheckboxListTile(
-              title: const Text('CheckboxListTile with red background'),
+              title: FaIcon(FontAwesomeIcons.magnifyingGlass),
               value: false,
               onChanged: (value) => (),
             ),
