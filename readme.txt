@@ -18,3 +18,4 @@ git commit -m "Adding FontAwesomeIconPack"
 git status
 git push
 git log
+se si blocca git log premere q
