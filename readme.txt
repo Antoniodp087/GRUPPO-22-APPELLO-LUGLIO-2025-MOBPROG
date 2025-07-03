@@ -10,3 +10,11 @@ git push -u origin main
 git remote add origin https://github.com/Antoniodp087/GRUPPO-22-APPELLO-LUGLIO-2025-MOBPROG.git
 git branch -M main
 git push -u origin main
+
+
+git add --all
+git status
+git commit -m "Adding FontAwesomeIconPack"
+git status
+git push
+git log
