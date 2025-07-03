@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 
 class AppStyle {
   //ICON COLOR
@@ -70,5 +71,137 @@ class AppStyle {
     fontSize: 20,
     color: buttonText,
     fontWeight: FontWeight.bold,
+  );
+
+  //💧droplet
+  //🪴potted plant
+  //🪚carpentry saw
+  //🥰smiling face
+  //🤕banded
+  //😔pensive
+
+  //EMOJI ICON
+  static Text dropletEmojiMobile = Text("💧", style: TextStyle(fontSize: 30));
+  static Text pottedPlantEmojiMobile = Text(
+    "🪴",
+    style: TextStyle(fontSize: 30),
+  );
+  static Text carpentrySawEmojiMobile = Text(
+    "🪚",
+    style: TextStyle(fontSize: 30),
+  );
+
+  static Text dropletEmoji = Text("💧", style: TextStyle(fontSize: 50));
+  static Text pottedPlantEmoji = Text("🪴", style: TextStyle(fontSize: 50));
+  static Text carpentrySawEmoji = Text("🪚", style: TextStyle(fontSize: 50));
+
+  static Text smilingFaceEmoji = Text("🥰", style: TextStyle(fontSize: 50));
+  static Text bandedEmoji = Text("🤕", style: TextStyle(fontSize: 50));
+  static Text pensiveEmoji = Text("😔", style: TextStyle(fontSize: 50));
+
+  static Text smilingFaceEmojiMobile = Text(
+    "🥰",
+    style: TextStyle(fontSize: 30),
+  );
+  static Text bandedEmojiMobile = Text("🤕", style: TextStyle(fontSize: 30));
+  static Text pensiveEmojiMobile = Text("😔", style: TextStyle(fontSize: 30));
+
+  //NAVIGATION ICON FILLED
+  static FaIcon houseActive = FaIcon(
+    FontAwesomeIcons.house,
+    color: iconActivated,
+    size: 60,
+  );
+  static FaIcon searchActive = FaIcon(
+    FontAwesomeIcons.magnifyingGlass,
+    color: iconActivated,
+    size: 60,
+  );
+  static FaIcon categoryActive = FaIcon(
+    FontAwesomeIcons.hashtag,
+    color: iconActivated,
+    size: 60,
+  );
+  static FaIcon analysisActive = FaIcon(
+    FontAwesomeIcons.chartColumn,
+    color: iconActivated,
+    size: 60,
+  );
+
+  //MOBILE NAVIGATION ICON FILLED
+  static FaIcon houseMobileActive = FaIcon(
+    FontAwesomeIcons.house,
+    color: iconActivated,
+    size: 30,
+  );
+  static FaIcon searchMobileActive = FaIcon(
+    FontAwesomeIcons.magnifyingGlass,
+    color: iconActivated,
+    size: 30,
+  );
+  static FaIcon categoryMobileActive = FaIcon(
+    FontAwesomeIcons.hashtag,
+    color: iconActivated,
+    size: 30,
+  );
+  static FaIcon analysisMobileActive = FaIcon(
+    FontAwesomeIcons.chartColumn,
+    color: iconActivated,
+    size: 30,
+  );
+
+  //NAVIGATION ICON
+  static FaIcon house = FaIcon(
+    FontAwesomeIcons.house,
+    color: iconUnactivated,
+    size: 60,
+  );
+  static FaIcon search = FaIcon(
+    FontAwesomeIcons.magnifyingGlass,
+    color: iconUnactivated,
+    size: 60,
+  );
+  static FaIcon category = FaIcon(
+    FontAwesomeIcons.hashtag,
+    color: iconUnactivated,
+    size: 60,
+  );
+  static FaIcon analysis = FaIcon(
+    FontAwesomeIcons.chartColumn,
+    color: iconUnactivated,
+    size: 60,
+  );
+
+  //MOBILE NAVIGATION ICON
+  static FaIcon houseMobile = FaIcon(
+    FontAwesomeIcons.house,
+    color: iconUnactivated,
+    size: 30,
+  );
+  static FaIcon searchMobile = FaIcon(
+    FontAwesomeIcons.magnifyingGlass,
+    color: iconUnactivated,
+    size: 30,
+  );
+  static FaIcon categoryMobile = FaIcon(
+    FontAwesomeIcons.hashtag,
+    color: iconUnactivated,
+    size: 30,
+  );
+  static FaIcon analysisMobile = FaIcon(
+    FontAwesomeIcons.chartColumn,
+    color: iconUnactivated,
+    size: 30,
+  );
+
+  static FaIcon categoryItem = FaIcon(
+    FontAwesomeIcons.hashtag,
+    color: iconActivated,
+    size: 30,
+  );
+  static FaIcon categoryItemMobile = FaIcon(
+    FontAwesomeIcons.hashtag,
+    color: iconActivated,
+    size: 20,
   );
 }

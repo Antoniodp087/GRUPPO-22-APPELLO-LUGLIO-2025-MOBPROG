@@ -11,6 +11,9 @@ git remote add origin https://github.com/Antoniodp087/GRUPPO-22-APPELLO-LUGLIO-2
 git branch -M main
 git push -u origin main
 
+ctrl + . on widget or stat
+to inizialize a file dart write St
+
 
 git add --all
 git status
