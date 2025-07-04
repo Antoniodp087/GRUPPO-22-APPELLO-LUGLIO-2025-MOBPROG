@@ -2,9 +2,15 @@ import 'package:flutter/material.dart';
 import 'package:plant_care_app/styles/app_style.dart';
 
 class AppCard extends StatelessWidget {
-  const AppCard({super.key, required this.plantName, this.image});
+  const AppCard({
+    super.key,
+    required this.plantName,
+    required this.plantType,
+    this.image,
+  });
 
   final String plantName;
+  final String plantType;
   final ImageProvider? image;
 
   @override
@@ -44,7 +50,7 @@ class AppCard extends StatelessWidget {
 
                   children: [
                     Text(plantName, style: AppStyle.cardTitle),
-                    Text(plantName, style: AppStyle.cardSubTitle),
+                    Text(plantType, style: AppStyle.cardSubTitle),
                   ],
                 ),
               ),
