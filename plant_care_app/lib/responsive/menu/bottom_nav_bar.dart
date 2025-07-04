@@ -1,0 +1,55 @@
+import 'package:flutter/material.dart';
+import 'package:plant_care_app/screens/all_component.dart';
+import 'package:plant_care_app/styles/app_style.dart';
+
+class BottomNavBar extends StatefulWidget {
+  final int currentIndex;
+  final ValueChanged<int> onTap;
+
+  const BottomNavBar({
+    super.key,
+    required this.currentIndex,
+    required this.onTap,
+  });
+
+  @override
+  State<BottomNavBar> createState() => _BottomNavBarState();
+}
+
+class _BottomNavBarState extends State<BottomNavBar> {
+  final appScreens = [AllComponent()];
+
+  @override
+  Widget build(BuildContext context) {
+    return Scaffold(
+      body: appScreens[widget.currentIndex],
+      bottomNavigationBar: BottomNavigationBar(
+        selectedItemColor: AppStyle.iconActivated,
+        unselectedItemColor: AppStyle.iconUnactivated,
+        showSelectedLabels: false,
+        items: [
+          BottomNavigationBarItem(
+            icon: AppStyle.houseMobile,
+            label: 'Home',
+            activeIcon: AppStyle.houseMobileActive,
+          ),
+          BottomNavigationBarItem(
+            icon: AppStyle.categoryMobile,
+            label: 'Category',
+            activeIcon: AppStyle.categoryMobileActive,
+          ),
+          BottomNavigationBarItem(
+            icon: AppStyle.searchMobile,
+            label: 'Search',
+            activeIcon: AppStyle.searchMobileActive,
+          ),
+          BottomNavigationBarItem(
+            icon: AppStyle.analysisMobile,
+            label: 'Analysis',
+            activeIcon: AppStyle.analysisMobileActive,
+          ),
+        ],
+      ),
+    );
+  }
+}

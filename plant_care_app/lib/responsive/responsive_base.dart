@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/rendering.dart';
+import 'package:plant_care_app/responsive/menu/bottom_nav_bar.dart';
+import 'package:plant_care_app/responsive/menu/side_nav_bar.dart';
 
 class ResponsiveBase extends StatefulWidget {
   const ResponsiveBase({super.key});
@@ -22,11 +24,9 @@ class _ResponsiveBaseState extends State<ResponsiveBase> {
     return LayoutBuilder(
       builder: (context, constraints) {
         if (constraints.maxWidth <= 402) {
-          return Placeholder(color: Colors.black);
-          //return BottomNavBar(currentIndex: _selectedIndex, onTap: _tabChanger);
+          return BottomNavBar(currentIndex: _selectedIndex, onTap: _tabChanger);
         } else {
-          return Placeholder(color: Colors.green);
-          //return SideNavBar(currentIndex: _selectedIndex, onTap: _tabChanger);
+          return SideNavBar(currentIndex: _selectedIndex, onTap: _tabChanger);
         }
       },
     );
