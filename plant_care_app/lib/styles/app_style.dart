@@ -59,7 +59,7 @@ class AppStyle {
 
   //MOBILE CARD TEXT STYLE
   static TextStyle cardMobile = GoogleFonts.quicksand(
-    fontSize: 16,
+    fontSize: 20,
     color: titleAndText,
     fontWeight: FontWeight.bold,
   );

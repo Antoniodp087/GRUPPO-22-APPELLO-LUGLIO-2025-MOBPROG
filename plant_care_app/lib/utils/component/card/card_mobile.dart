@@ -10,7 +10,7 @@ class AppCardMobile extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container(
-      width: 270,
+      width: 300,
       height: 138,
       decoration: BoxDecoration(borderRadius: BorderRadius.circular(24)),
 
@@ -37,6 +37,7 @@ class AppCardMobile extends StatelessWidget {
               ),
               SizedBox(width: 8),
               Expanded(child: Text(plantName, style: AppStyle.cardMobile)),
+              SizedBox(width: 8),
             ],
           ),
           onTap: () {
