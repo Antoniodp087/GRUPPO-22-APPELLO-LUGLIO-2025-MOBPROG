@@ -45,6 +45,25 @@ class AppStyle {
     fontWeight: FontWeight.bold,
   );
 
+  //CARD TEXT STYLE
+  static TextStyle cardTitle = GoogleFonts.quicksand(
+    fontSize: 60,
+    color: titleAndText,
+    fontWeight: FontWeight.bold,
+  );
+  static TextStyle cardSubTitle = GoogleFonts.quicksand(
+    fontSize: 30,
+    color: titleAndText,
+    fontWeight: FontWeight.bold,
+  );
+
+  //MOBILE CARD TEXT STYLE
+  static TextStyle cardMobile = GoogleFonts.quicksand(
+    fontSize: 16,
+    color: titleAndText,
+    fontWeight: FontWeight.bold,
+  );
+
   //MOBILE TITLE TEXT STYLE
   static TextStyle mobileHeadLine0 = GoogleFonts.quicksand(
     fontSize: 60,

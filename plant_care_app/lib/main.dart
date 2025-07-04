@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:plant_care_app/styles/app_style.dart';
+import 'package:plant_care_app/utils/component/card/card.dart';
+import 'package:plant_care_app/utils/component/card/card_mobile.dart';
 import 'package:plant_care_app/utils/component/category.dart';
 import 'package:plant_care_app/utils/component/double_text.dart';
 import 'package:plant_care_app/utils/component/mobile_category.dart';
@@ -46,6 +48,8 @@ class MainApp extends StatelessWidget {
                 AppStyle.houseMobileActive,
                 AppCategory(category: 'categoria1'),
                 MobileAppCategory(category: 'categoria1'),
+                AppCardMobile(plantName: "nome pianta"),
+                AppCard(plantName: 'plantName'),
               ],
             ),
           ),
