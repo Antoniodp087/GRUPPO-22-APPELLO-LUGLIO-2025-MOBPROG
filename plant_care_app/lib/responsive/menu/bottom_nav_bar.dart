@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:plant_care_app/screens/all_component.dart';
+import 'package:plant_care_app/screens/mobile/home_mobile.dart';
 import 'package:plant_care_app/screens/mobile/plant_detail_mobile.dart';
 import 'package:plant_care_app/styles/app_style.dart';
 
@@ -20,8 +21,8 @@ class BottomNavBar extends StatefulWidget {
 class _BottomNavBarState extends State<BottomNavBar> {
   //screen
   final appScreens = [
+    HomeMobile(),
     AllComponent(),
-    PlantDetailMobile(),
     PlantDetailMobile(),
     PlantDetailMobile(),
   ];
