@@ -1,0 +1,86 @@
+import 'package:sqflite/sqflite.dart';
+import 'package:path/path.dart';
+
+class PlantCareDatabase {
+  static final PlantCareDatabase instance = PlantCareDatabase._init();
+
+  static Database? _database;
+
+  PlantCareDatabase._init();
+
+  Future<Database> get database async {
+    if (_database != null) {
+      return _database!;
+    }
+    _database = await _initDB('plants.db');
+    return _database!;
+  }
+
+  Future<Database> _initDB(String filePath) async {
+    final dbPath = await getDatabasesPath();
+    final path = join(dbPath, filePath);
+
+    return await openDatabase(path, version: 1, onCreate: _createDB);
+  }
+
+  //DATABASE CREATE TABLE
+  Future _createDB(Database db, int version) async {
+    await db.execute('''
+      CREATE TABLE plants(
+        id INTEGER PRIMARY KEY AUTOINCREMENT,
+        name TEXT,
+        species TEXT,
+        description TEXT,
+        planted_on TEXT,
+        category TEXT,
+        last_watering TEXT,
+        last_pruning TEXT,
+        last transfer TEXT,
+        next_watering TEXT,
+        next_pruning TEXT,
+        next transfer TEXT,
+        status TEXT
+        note TEXT
+      )
+    ''');
+  }
+
+  //DATABASE INSERT ELEMENT
+  Future<int> insertPlant(Map<String, dynamic> plant) async {
+    final db = await instance.database;
+    return await db.insert('plants', plant);
+  }
+
+  //DATABASE RETURN ELEMENT
+  Future<Map<String, dynamic>> getPlant(int id) async {
+    final db = await instance.database;
+    final maps = await db.query('plants', where: 'id = ?', whereArgs: [id]);
+    if (maps.isNotEmpty) {
+      return maps.first;
+    }
+    throw Exception('Plant $id not found');
+  }
+
+  //DATABASE RETURN ALL ELEMENT
+  Future<List<Map<String, dynamic>>> getAllPlants() async {
+    final db = await instance.database;
+    return await db.query('plants');
+  }
+
+  //DATABASE UPDATE ELEMENT
+  Future<int> updatePlant(int id, Map<String, dynamic> plant) async {
+    final db = await instance.database;
+    return await db.update('plants', plant, where: 'id = ?', whereArgs: [id]);
+  }
+
+  //DATABASE DELETE ELEMENT
+  Future<int> deletePlant(int id) async {
+    final db = await instance.database;
+    return await db.delete('plants', where: 'id = ?', whereArgs: [id]);
+  }
+
+  Future close() async {
+    final db = await instance.database;
+    db.close();
+  }
+}

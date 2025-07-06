@@ -8,15 +8,24 @@ class AppCategory extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Row(
-      children: [
-        AppStyle.categoryItem,
-        Text(category, style: AppStyle.headLine3),
-        SizedBox(width: 5),
-        number != null
-            ? Text("$number", style: AppStyle.cardSubTitle)
-            : const SizedBox(),
-      ],
+    return Center(
+      child: Row(
+        mainAxisAlignment: MainAxisAlignment.center,
+        crossAxisAlignment: CrossAxisAlignment.center,
+        children: [
+          AppStyle.categoryItem,
+          InkWell(
+            child: Text(category, style: AppStyle.headLine3),
+            onTap: () {
+              print('$category tapped');
+            },
+          ),
+          SizedBox(width: 5),
+          number != null
+              ? Text("$number", style: AppStyle.cardSubTitle)
+              : const SizedBox(),
+        ],
+      ),
     );
   }
 }

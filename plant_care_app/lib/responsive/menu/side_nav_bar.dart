@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:plant_care_app/screens/all_component.dart';
+import 'package:plant_care_app/screens/mobile/plant_detail_mobile.dart';
 import 'package:plant_care_app/styles/app_style.dart';
 
 class SideNavBar extends StatelessWidget {
@@ -20,16 +21,13 @@ class SideNavBar extends StatelessWidget {
         page = AllComponent();
       //break;
       case 1:
-        page = AllComponent();
-        ;
+        page = PlantDetailMobile();
       //break;
       case 2:
         page = AllComponent();
-        ;
       //break;
       case 3:
         page = AllComponent();
-        ;
       //break;
       default:
         throw UnimplementedError('no widget for $currentIndex');
@@ -40,32 +38,33 @@ class SideNavBar extends StatelessWidget {
         NavigationRail(
           labelType: NavigationRailLabelType.selected,
           useIndicator: false,
-          groupAlignment: 0,
+          groupAlignment: -1,
           destinations: [
             NavigationRailDestination(
               icon: AppStyle.house,
-              label: Text('Home'),
+              label: Text('Home', style: AppStyle.headLine3),
               selectedIcon: AppStyle.houseActive,
             ),
             NavigationRailDestination(
               icon: AppStyle.category,
-              label: Text('Category'),
+              label: Text('Category', style: AppStyle.headLine3),
               selectedIcon: AppStyle.categoryActive,
             ),
             NavigationRailDestination(
               icon: AppStyle.search,
-              label: Text('Search'),
+              label: Text('Search', style: AppStyle.headLine3),
               selectedIcon: AppStyle.searchActive,
             ),
             NavigationRailDestination(
               icon: AppStyle.analysis,
-              label: Text('Analysis'),
+              label: Text('Analysis', style: AppStyle.headLine3),
               selectedIcon: AppStyle.analysisActive,
             ),
           ],
           selectedIndex: currentIndex,
           onDestinationSelected: onTap,
         ),
+        //content
         Expanded(child: Scaffold(body: Container(child: page))),
       ],
     );

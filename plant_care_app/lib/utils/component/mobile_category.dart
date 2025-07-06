@@ -8,15 +8,24 @@ class MobileAppCategory extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Row(
-      children: [
-        AppStyle.categoryItemMobile,
-        Text(category, style: AppStyle.mobileHeadLine3),
-        SizedBox(width: 5),
-        number != null
-            ? Text("$number", style: AppStyle.cardMobile)
-            : const SizedBox(),
-      ],
+    return Center(
+      child: Row(
+        mainAxisAlignment: MainAxisAlignment.center,
+        crossAxisAlignment: CrossAxisAlignment.center,
+        children: [
+          AppStyle.categoryItemMobile,
+          InkWell(
+            child: Text(category, style: AppStyle.mobileHeadLine3),
+            onTap: () {
+              print('$category tapped');
+            },
+          ),
+          SizedBox(width: 5),
+          number != null
+              ? Text("$number", style: AppStyle.cardMobile)
+              : const SizedBox(),
+        ],
+      ),
     );
   }
 }

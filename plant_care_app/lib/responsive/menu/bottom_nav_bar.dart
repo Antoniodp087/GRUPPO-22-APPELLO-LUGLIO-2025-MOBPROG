@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:plant_care_app/screens/all_component.dart';
+import 'package:plant_care_app/screens/mobile/plant_detail_mobile.dart';
 import 'package:plant_care_app/styles/app_style.dart';
 
 class BottomNavBar extends StatefulWidget {
@@ -17,7 +18,13 @@ class BottomNavBar extends StatefulWidget {
 }
 
 class _BottomNavBarState extends State<BottomNavBar> {
-  final appScreens = [AllComponent()];
+  //screen
+  final appScreens = [
+    AllComponent(),
+    PlantDetailMobile(),
+    PlantDetailMobile(),
+    PlantDetailMobile(),
+  ];
 
   @override
   Widget build(BuildContext context) {
@@ -27,6 +34,12 @@ class _BottomNavBarState extends State<BottomNavBar> {
         selectedItemColor: AppStyle.iconActivated,
         unselectedItemColor: AppStyle.iconUnactivated,
         showSelectedLabels: false,
+
+        //tab changer
+        onTap: widget.onTap,
+        currentIndex: widget.currentIndex,
+
+        //items of Navigation Bar
         items: [
           BottomNavigationBarItem(
             icon: AppStyle.houseMobile,
