@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:plant_care_app/screens/all_component.dart';
 import 'package:plant_care_app/screens/mobile/plant_detail_mobile.dart';
+import 'package:plant_care_app/screens/other_device/category_home.dart';
 import 'package:plant_care_app/screens/other_device/home.dart';
 import 'package:plant_care_app/styles/app_style.dart';
 
@@ -22,7 +23,7 @@ class SideNavBar extends StatelessWidget {
         page = Home();
       //break;
       case 1:
-        page = PlantDetailMobile();
+        page = CategoryHome();
       //break;
       case 2:
         page = AllComponent();

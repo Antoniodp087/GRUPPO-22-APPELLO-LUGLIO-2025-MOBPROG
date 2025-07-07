@@ -207,41 +207,69 @@ class _MobileFormState extends State<MobileForm> {
 
   @override
   Widget build(BuildContext context) {
+    String title;
+    if (widget.plantId != null) {
+      title = nameController.text;
+    } else {
+      title = 'Nuova pianta';
+    }
     return SafeArea(
       child: Scaffold(
-        appBar: AppBar(
-          title: Text('Nuova pianta', style: AppStyle.mobileHeadLine1),
-        ),
+        appBar: AppBar(title: Text(title, style: AppStyle.mobileHeadLine1)),
         body: Center(
           child: Form(
             key: _formKey,
             child: ListView(
+              padding: EdgeInsets.all(15.0),
               children: [
                 TextFormField(
                   controller: nameController,
-                  decoration: InputDecoration(labelText: 'Nome pianta'),
+                  decoration: InputDecoration(
+                    labelText: 'Nome pianta',
+                    border: OutlineInputBorder(),
+                  ),
                 ),
+                SizedBox(height: 10),
                 TextFormField(
                   controller: speciesController,
-                  decoration: InputDecoration(labelText: 'Specie'),
+                  decoration: InputDecoration(
+                    labelText: 'Specie',
+                    border: OutlineInputBorder(),
+                  ),
                 ),
+                SizedBox(height: 10),
                 TextFormField(
                   controller: immageController,
-                  decoration: InputDecoration(labelText: 'Url dell\'immagine'),
+                  decoration: InputDecoration(
+                    labelText: 'Url dell\'immagine',
+                    border: OutlineInputBorder(),
+                  ),
                 ),
+                SizedBox(height: 10),
                 TextFormField(
                   controller: descriptionController,
-                  decoration: InputDecoration(labelText: 'Descrizione'),
+                  decoration: InputDecoration(
+                    labelText: 'Descrizione',
+                    border: OutlineInputBorder(),
+                  ),
                 ),
+                SizedBox(height: 10),
                 TextFormField(
                   controller: plantedOnController,
-                  decoration: InputDecoration(labelText: 'Piantata il: '),
+                  decoration: InputDecoration(
+                    labelText: 'Piantata il: ',
+                    border: OutlineInputBorder(),
+                  ),
                   readOnly: true,
                   onTap: isDateEditable ? _pickDate : null,
                 ),
+                SizedBox(height: 10),
                 DropdownButtonFormField<int>(
                   value: selectedCategoryId,
-                  decoration: const InputDecoration(labelText: 'Categoria'),
+                  decoration: const InputDecoration(
+                    labelText: 'Categoria',
+                    border: OutlineInputBorder(),
+                  ),
                   items: [
                     ..._categories.map((cat) {
                       return DropdownMenuItem<int>(
@@ -266,13 +294,16 @@ class _MobileFormState extends State<MobileForm> {
                     });
                   },
                 ),
+                SizedBox(height: 10),
                 if (categoryChoice == 'new')
                   TextFormField(
                     controller: newCategoryController,
                     decoration: const InputDecoration(
                       labelText: 'Nuova categoria',
+                      border: OutlineInputBorder(),
                     ),
                   ),
+                SizedBox(height: 10),
 
                 CheckboxListTile(
                   value: watering,
@@ -289,6 +320,7 @@ class _MobileFormState extends State<MobileForm> {
                   onChanged: (val) => setState(() => transfer = val!),
                   title: const Text('Travasata'),
                 ),
+                SizedBox(height: 10),
                 DropdownButtonFormField<String>(
                   value: status,
                   items: const [
@@ -300,13 +332,21 @@ class _MobileFormState extends State<MobileForm> {
                     ),
                   ],
                   onChanged: (val) => setState(() => status = val),
-                  decoration: const InputDecoration(labelText: 'Stato'),
+                  decoration: const InputDecoration(
+                    labelText: 'Stato',
+                    border: OutlineInputBorder(),
+                  ),
                 ),
+                SizedBox(height: 10),
 
                 TextFormField(
                   controller: noteController,
-                  decoration: const InputDecoration(labelText: 'Note'),
+                  decoration: const InputDecoration(
+                    labelText: 'Note',
+                    border: OutlineInputBorder(),
+                  ),
                 ),
+                SizedBox(height: 50),
 
                 ElevatedButton(
                   onPressed: _exit,
@@ -317,6 +357,7 @@ class _MobileFormState extends State<MobileForm> {
                   ),
                   child: Text('Elimina', style: AppStyle.mobileButton),
                 ),
+                SizedBox(height: 10),
 
                 ElevatedButton(
                   onPressed: _saveData,

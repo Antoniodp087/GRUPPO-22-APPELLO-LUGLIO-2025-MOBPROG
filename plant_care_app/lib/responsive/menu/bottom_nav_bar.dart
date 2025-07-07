@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:plant_care_app/screens/all_component.dart';
+import 'package:plant_care_app/screens/all_sqlite_plant.dart';
 import 'package:plant_care_app/screens/mobile/category_home_mobile.dart';
 import 'package:plant_care_app/screens/mobile/home_mobile.dart';
 import 'package:plant_care_app/screens/mobile/plant_detail_mobile.dart';
@@ -24,7 +25,7 @@ class _BottomNavBarState extends State<BottomNavBar> {
   final appScreens = [
     HomeMobile(),
     CategoryHomeMobile(),
-    AllComponent(),
+    PlantListPage(),
     PlantDetailMobile(),
   ];
 

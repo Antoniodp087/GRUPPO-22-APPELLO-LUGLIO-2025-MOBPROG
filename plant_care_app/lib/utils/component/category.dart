@@ -14,12 +14,7 @@ class AppCategory extends StatelessWidget {
         crossAxisAlignment: CrossAxisAlignment.center,
         children: [
           AppStyle.categoryItem,
-          InkWell(
-            child: Text(category, style: AppStyle.headLine3),
-            onTap: () {
-              print('$category tapped');
-            },
-          ),
+          Text(category, style: AppStyle.headLine3),
           SizedBox(width: 5),
           number != null
               ? Text("$number", style: AppStyle.cardSubTitle)

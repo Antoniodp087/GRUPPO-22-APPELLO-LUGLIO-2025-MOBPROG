@@ -209,42 +209,70 @@ class _AppFormState extends State<AppForm> {
   Widget build(BuildContext context) {
     print('travasata $transfer');
     print('travasata $nextTransferController');
+    String title;
+    if (widget.plantId != null) {
+      title = nameController.text;
+    } else {
+      title = 'Nuova pianta';
+    }
 
     return SafeArea(
       child: Scaffold(
-        appBar: AppBar(
-          title: Text('Nuova pianta', style: AppStyle.mobileHeadLine1),
-        ),
+        appBar: AppBar(title: Text(title, style: AppStyle.headLine1)),
         body: Center(
           child: Form(
             key: _formKey,
             child: ListView(
+              padding: EdgeInsets.all(30.0),
               children: [
                 TextFormField(
                   controller: nameController,
-                  decoration: InputDecoration(labelText: 'Nome pianta'),
+                  decoration: InputDecoration(
+                    labelText: 'Nome pianta',
+                    border: OutlineInputBorder(),
+                  ),
                 ),
+                SizedBox(height: 20),
                 TextFormField(
                   controller: speciesController,
-                  decoration: InputDecoration(labelText: 'Specie'),
+                  decoration: InputDecoration(
+                    labelText: 'Specie',
+                    border: OutlineInputBorder(),
+                  ),
                 ),
+                SizedBox(height: 20),
                 TextFormField(
                   controller: immageController,
-                  decoration: InputDecoration(labelText: 'Url dell\'immagine'),
+                  decoration: InputDecoration(
+                    labelText: 'Url dell\'immagine',
+                    border: OutlineInputBorder(),
+                  ),
                 ),
+                SizedBox(height: 20),
                 TextFormField(
                   controller: descriptionController,
-                  decoration: InputDecoration(labelText: 'Descrizione'),
+                  decoration: InputDecoration(
+                    labelText: 'Descrizione',
+                    border: OutlineInputBorder(),
+                  ),
                 ),
+                SizedBox(height: 20),
                 TextFormField(
                   controller: plantedOnController,
-                  decoration: InputDecoration(labelText: 'Piantata il: '),
+                  decoration: InputDecoration(
+                    labelText: 'Piantata il: ',
+                    border: OutlineInputBorder(),
+                  ),
                   readOnly: true,
                   onTap: isDateEditable ? _pickDate : null,
                 ),
+                SizedBox(height: 20),
                 DropdownButtonFormField<int>(
                   value: selectedCategoryId,
-                  decoration: const InputDecoration(labelText: 'Categoria'),
+                  decoration: const InputDecoration(
+                    labelText: 'Categoria',
+                    border: OutlineInputBorder(),
+                  ),
                   items: [
                     ..._categories.map((cat) {
                       return DropdownMenuItem<int>(
@@ -269,13 +297,16 @@ class _AppFormState extends State<AppForm> {
                     });
                   },
                 ),
+                SizedBox(height: 20),
                 if (categoryChoice == 'new')
                   TextFormField(
                     controller: newCategoryController,
                     decoration: const InputDecoration(
                       labelText: 'Nuova categoria',
+                      border: OutlineInputBorder(),
                     ),
                   ),
+                SizedBox(height: 20),
 
                 CheckboxListTile(
                   value: watering,
@@ -292,6 +323,7 @@ class _AppFormState extends State<AppForm> {
                   onChanged: (val) => {setState(() => transfer = val!)},
                   title: const Text('Travasata'),
                 ),
+                SizedBox(height: 20),
                 DropdownButtonFormField<String>(
                   value: status,
                   items: const [
@@ -303,13 +335,21 @@ class _AppFormState extends State<AppForm> {
                     ),
                   ],
                   onChanged: (val) => setState(() => status = val),
-                  decoration: const InputDecoration(labelText: 'Stato'),
+                  decoration: const InputDecoration(
+                    labelText: 'Stato',
+                    border: OutlineInputBorder(),
+                  ),
                 ),
+                SizedBox(height: 20),
 
                 TextFormField(
                   controller: noteController,
-                  decoration: const InputDecoration(labelText: 'Note'),
+                  decoration: const InputDecoration(
+                    labelText: 'Note',
+                    border: OutlineInputBorder(),
+                  ),
                 ),
+                SizedBox(height: 60),
 
                 ElevatedButton(
                   onPressed: _exit,
@@ -318,8 +358,9 @@ class _AppFormState extends State<AppForm> {
                       AppStyle.bgButtonNegative,
                     ),
                   ),
-                  child: Text('Elimina', style: AppStyle.mobileButton),
+                  child: Text('Elimina', style: AppStyle.button),
                 ),
+                SizedBox(height: 20),
 
                 ElevatedButton(
                   onPressed: _saveData,
@@ -328,7 +369,7 @@ class _AppFormState extends State<AppForm> {
                       AppStyle.bgButtonPositive,
                     ),
                   ),
-                  child: Text('Salva', style: AppStyle.mobileButton),
+                  child: Text('Salva', style: AppStyle.button),
                 ),
               ],
             ),

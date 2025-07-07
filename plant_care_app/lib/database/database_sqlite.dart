@@ -129,6 +129,26 @@ class PlantCareDatabase {
     return await db.delete('categories', where: 'id = ?', whereArgs: [id]);
   }
 
+  Future<int> getPlantCountByCategoryName(String categoryName) async {
+    final db = await instance.database;
+
+    final result = await db.rawQuery(
+      '''
+      SELECT COUNT(plants.id) as count
+      FROM plants
+      JOIN categories ON plants.category_id = categories.id
+      WHERE categories.name = ?
+    ''',
+      [categoryName],
+    );
+
+    if (result.isNotEmpty && result.first['count'] != null) {
+      return Sqflite.firstIntValue(result) ?? 0;
+    } else {
+      return 0;
+    }
+  }
+
   Future close() async {
     final db = await instance.database;
     db.close();

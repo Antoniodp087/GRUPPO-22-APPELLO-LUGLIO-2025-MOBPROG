@@ -3,6 +3,7 @@ import 'package:plant_care_app/database/database_sqlite.dart';
 import 'package:plant_care_app/routes/app_routes.dart';
 import 'package:plant_care_app/screens/mobile/n_m_category_mobile.dart';
 import 'package:plant_care_app/styles/app_style.dart';
+import 'package:plant_care_app/utils/component/mobile_category.dart';
 
 class CategoryHomeMobile extends StatefulWidget {
   const CategoryHomeMobile({super.key});
@@ -13,35 +14,52 @@ class CategoryHomeMobile extends StatefulWidget {
 
 class _CategoryHomeMobileState extends State<CategoryHomeMobile> {
   List<Map<String, dynamic>> categories = [];
+  Map<int, int> categoryCounts = {}; // id categoria -> numero piante
 
   @override
   void initState() {
     super.initState();
-    _loadCategories();
+    _loadCategoriesAndCounts();
   }
 
-  Future<void> _loadCategories() async {
+  Future<void> _loadCategoriesAndCounts() async {
     final data = await PlantCareDatabase.instance.getAllCategories();
+
+    final Map<int, int> counts = {};
+    for (var category in data) {
+      final count = await PlantCareDatabase.instance
+          .getPlantCountByCategoryName(category['name']);
+      counts[category['id']] = count;
+    }
+
     setState(() {
       categories = data;
+      categoryCounts = counts;
     });
   }
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(title: Text('Categorie')),
+      appBar: AppBar(title: const Text('Categorie')),
       body: Column(
         children: [
           categories.isEmpty
-              ? const Center(child: Text('Nessuna categoria presente'))
+              ? const Expanded(
+                child: Center(child: Text('Nessuna categoria presente')),
+              )
               : Expanded(
                 child: ListView.builder(
                   itemCount: categories.length,
                   itemBuilder: (context, index) {
                     final category = categories[index];
+                    final num = categoryCounts[category['id']] ?? 0;
+
                     return ListTile(
-                      title: Text(category['name']),
+                      title: MobileAppCategory(
+                        category: category['name'],
+                        number: num,
+                      ),
                       onTap: () async {
                         await Navigator.push(
                           context,
@@ -52,20 +70,19 @@ class _CategoryHomeMobileState extends State<CategoryHomeMobile> {
                                 ),
                           ),
                         );
-                        _loadCategories();
+                        await _loadCategoriesAndCounts();
                       },
                     );
                   },
                 ),
               ),
           ElevatedButton(
-            onPressed:
-                () =>
-                    Navigator.pushNamed(context, AppRoutes.categoryMobileForm),
-
-            //Navigator.pushNamed(context, '/form'),
+            onPressed: () async {
+              await Navigator.pushNamed(context, AppRoutes.categoryMobileForm);
+              await _loadCategoriesAndCounts();
+            },
             style: ButtonStyle(
-              backgroundColor: WidgetStatePropertyAll<Color>(
+              backgroundColor: MaterialStateProperty.all<Color>(
                 AppStyle.bgButtonPositive,
               ),
             ),

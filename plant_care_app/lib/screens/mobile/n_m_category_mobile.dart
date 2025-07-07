@@ -42,7 +42,16 @@ class _CategoryMobileFormState extends State<CategoryMobileForm> {
     // Esporta JSON aggiornato
     await JsonExporter.instance.exportToJson();
 
-    if (context.mounted) Navigator.pushReplacementNamed(context, '/');
+    if (context.mounted) Navigator.pop(context);
+    ;
+  }
+
+  Future<void> _exit() async {
+    if (widget.categoryId != null) {
+      await PlantCareDatabase.instance.deleteCategory(widget.categoryId!);
+    }
+    Navigator.pop(context);
+    ;
   }
 
   @override
@@ -62,13 +71,13 @@ class _CategoryMobileFormState extends State<CategoryMobileForm> {
               ),
             ),
             ElevatedButton(
-              onPressed: () => Navigator.pushReplacementNamed(context, '/'),
+              onPressed: () => Navigator.pop(context),
               style: ButtonStyle(
                 backgroundColor: WidgetStatePropertyAll<Color>(
                   AppStyle.bgButtonNegative,
                 ),
               ),
-              child: Text('Elimina', style: AppStyle.mobileButton),
+              child: Text('Annulla', style: AppStyle.mobileButton),
             ),
 
             ElevatedButton(
