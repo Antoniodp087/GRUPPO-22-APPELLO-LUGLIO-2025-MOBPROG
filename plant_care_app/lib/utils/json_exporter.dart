@@ -16,7 +16,11 @@ class JsonExporter {
     final jsonString = jsonEncode(combined);
 
     final directory = await getApplicationDocumentsDirectory();
-    final file = File('${directory.path}/plants.json');
+    final subDirectory = Directory('${directory.path}/salvataggiJson');
+    if (!await subDirectory.exists()) {
+      await subDirectory.create(recursive: true);
+    }
+    final file = File('${subDirectory.path}/plants.json');
 
     await file.writeAsString(jsonString);
 

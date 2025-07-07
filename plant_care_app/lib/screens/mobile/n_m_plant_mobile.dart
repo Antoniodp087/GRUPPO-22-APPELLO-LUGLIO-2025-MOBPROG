@@ -20,18 +20,19 @@ class _MobileFormState extends State<MobileForm> {
 
   final TextEditingController nameController = TextEditingController();
   final TextEditingController speciesController = TextEditingController();
+  final TextEditingController immageController = TextEditingController();
   final TextEditingController descriptionController = TextEditingController();
   final TextEditingController plantedOnController = TextEditingController();
 
   String? category;
 
-  final TextEditingController lastWateringController = TextEditingController();
-  final TextEditingController lastPruningController = TextEditingController();
-  final TextEditingController lastTransferController = TextEditingController();
+  TextEditingController lastWateringController = TextEditingController();
+  TextEditingController lastPruningController = TextEditingController();
+  TextEditingController lastTransferController = TextEditingController();
 
-  final TextEditingController nextWateringController = TextEditingController();
-  final TextEditingController nextPruningController = TextEditingController();
-  final TextEditingController nextTransferController = TextEditingController();
+  TextEditingController nextWateringController = TextEditingController();
+  TextEditingController nextPruningController = TextEditingController();
+  TextEditingController nextTransferController = TextEditingController();
 
   String? status;
 
@@ -65,9 +66,10 @@ class _MobileFormState extends State<MobileForm> {
     setState(() {
       nameController.text = data['name'] ?? "";
       speciesController.text = data['species'] ?? "";
+      immageController.text = data['image'] ?? '';
       descriptionController.text = data['description'] ?? "";
       plantedOnController.text = data['planted_on'] ?? "";
-      selectedCategoryId = data['category'];
+      selectedCategoryId = data['category_id'];
       lastWateringController.text = data['last_watering'] ?? "";
       lastPruningController.text = data['last_pruning'] ?? "";
       lastTransferController.text = data['last_transfer'] ?? "";
@@ -86,11 +88,50 @@ class _MobileFormState extends State<MobileForm> {
   }
 
   Future<void> _saveData() async {
-    final tasks = [
-      if (watering) 'car1',
-      if (pruning) 'car2',
-      if (transfer) 'car3',
-    ].join(',');
+    String dateString = plantedOnController.text;
+
+    final formatter = DateFormat('dd/MM/yyyy');
+    DateTime originalDate = formatter.parse(dateString);
+    DateTime nextWatering = originalDate.add(Duration(days: 2));
+    DateTime nextPruning = originalDate.add(Duration(days: 60));
+    DateTime nextTransfer = originalDate.add(Duration(days: 365));
+    String nextWateringString = formatter.format(nextWatering);
+    String nextPruningString = formatter.format(nextPruning);
+    String nextTransferString = formatter.format(nextTransfer);
+
+    lastWateringController = plantedOnController;
+    lastPruningController = plantedOnController;
+    lastTransferController = plantedOnController;
+    nextWateringController.text = nextWateringString;
+    nextPruningController.text = nextPruningString;
+    nextTransferController.text = nextTransferString;
+
+    if (widget.plantId != null) {
+      if (watering) {
+        dateString = nextWateringController.text;
+        originalDate = formatter.parse(dateString);
+        nextWatering = originalDate.add(Duration(days: 2));
+        nextWateringString = formatter.format(nextWatering);
+        lastWateringController = nextWateringController;
+        nextWateringController.text = nextWateringString;
+      }
+      if (pruning) {
+        dateString = nextPruningController.text;
+        originalDate = formatter.parse(dateString);
+        nextPruning = originalDate.add(Duration(days: 60));
+        nextPruningString = formatter.format(nextPruning);
+        lastPruningController = nextPruningController;
+        nextPruningController.text = nextPruningString;
+      }
+      if (transfer) {
+        dateString = nextTransferController.text;
+        originalDate = formatter.parse(dateString);
+        nextTransfer = originalDate.add(Duration(days: 365));
+        nextTransferString = formatter.format(nextTransfer);
+        lastTransferController = nextTransferController;
+        nextTransferController.text = nextTransferString;
+      }
+    }
 
     int? categoryIdToSave = selectedCategoryId;
 
@@ -116,9 +157,10 @@ class _MobileFormState extends State<MobileForm> {
     final data = {
       'name': nameController.text,
       'species': speciesController.text,
+      'image': immageController.text,
       'description': descriptionController.text,
       'planted_on': plantedOnController.text,
-      'category': categoryIdToSave,
+      'category_id': categoryIdToSave,
       'last_watering': lastWateringController.text,
       'last_pruning': lastPruningController.text,
       'last_transfer': lastTransferController.text,
@@ -156,6 +198,13 @@ class _MobileFormState extends State<MobileForm> {
     }
   }
 
+  Future<void> _exit() async {
+    if (widget.plantId != null) {
+      await PlantCareDatabase.instance.deletePlant(widget.plantId!);
+    }
+    Navigator.pushReplacementNamed(context, '/');
+  }
+
   @override
   Widget build(BuildContext context) {
     return SafeArea(
@@ -175,6 +224,10 @@ class _MobileFormState extends State<MobileForm> {
                 TextFormField(
                   controller: speciesController,
                   decoration: InputDecoration(labelText: 'Specie'),
+                ),
+                TextFormField(
+                  controller: immageController,
+                  decoration: InputDecoration(labelText: 'Url dell\'immagine'),
                 ),
                 TextFormField(
                   controller: descriptionController,
@@ -243,7 +296,7 @@ class _MobileFormState extends State<MobileForm> {
                     DropdownMenuItem(value: 'Malato', child: Text('Malato')),
                     DropdownMenuItem(
                       value: 'Da controllare',
-                      child: Text('In crescita'),
+                      child: Text('Da controllare'),
                     ),
                   ],
                   onChanged: (val) => setState(() => status = val),
@@ -256,7 +309,7 @@ class _MobileFormState extends State<MobileForm> {
                 ),
 
                 ElevatedButton(
-                  onPressed: () => Navigator.pushReplacementNamed(context, '/'),
+                  onPressed: _exit,
                   style: ButtonStyle(
                     backgroundColor: WidgetStatePropertyAll<Color>(
                       AppStyle.bgButtonNegative,

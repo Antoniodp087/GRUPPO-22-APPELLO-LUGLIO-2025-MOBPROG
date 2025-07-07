@@ -10,6 +10,9 @@ void main() async {
   // Inizializza sqflite_common_ffi
   sqfliteFfiInit();
   databaseFactory = databaseFactoryFfi;
+  databaseFactory = databaseFactoryFfi;
+  final dbPath = await getDatabasesPath();
+  print('Database : $dbPath');
 
   runApp(const MainApp());
 }
