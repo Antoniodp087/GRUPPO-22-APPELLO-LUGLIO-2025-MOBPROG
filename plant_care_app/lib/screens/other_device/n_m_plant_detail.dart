@@ -47,8 +47,8 @@ class _AppFormState extends State<AppForm> {
   @override
   void initState() {
     super.initState();
+    _loadCategories();
     if (widget.plantId != null) {
-      _loadCategories();
       _loadData(widget.plantId!);
     }
   }
@@ -158,6 +158,8 @@ class _AppFormState extends State<AppForm> {
 
   @override
   Widget build(BuildContext context) {
+    print('travasata $transfer');
+
     return SafeArea(
       child: Scaffold(
         appBar: AppBar(
@@ -233,7 +235,7 @@ class _AppFormState extends State<AppForm> {
                 ),
                 CheckboxListTile(
                   value: transfer,
-                  onChanged: (val) => setState(() => transfer = val!),
+                  onChanged: (val) => {setState(() => transfer = val!)},
                   title: const Text('Travasata'),
                 ),
                 DropdownButtonFormField<String>(

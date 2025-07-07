@@ -39,7 +39,7 @@ class PlantCareDatabase {
         species TEXT,
         description TEXT,
         planted_on TEXT,
-        category INTEGER,
+        category_id INTEGER,
         last_watering TEXT,
         last_pruning TEXT,
         last transfer TEXT,

@@ -47,8 +47,8 @@ class _MobileFormState extends State<MobileForm> {
   @override
   void initState() {
     super.initState();
+    _loadCategories();
     if (widget.plantId != null) {
-      _loadCategories();
       _loadData(widget.plantId!);
     }
   }
