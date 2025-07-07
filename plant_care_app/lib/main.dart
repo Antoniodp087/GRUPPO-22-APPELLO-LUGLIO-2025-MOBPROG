@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:plant_care_app/responsive/responsive_base.dart';
+import 'package:plant_care_app/routes/app_routes.dart';
 import 'package:plant_care_app/screens/mobile/n_m_plant_mobile.dart';
 import 'package:plant_care_app/screens/other_device/n_m_plant_detail.dart';
 
@@ -22,8 +23,8 @@ class MainApp extends StatelessWidget {
         home: ResponsiveBase(),
         routes: {
           //'/': (context) => const PlantListPage(),
-          '/mobile-form': (context) => const MobileForm(),
-          '/form': (context) => AppForm(),
+          AppRoutes.plantMobileForm: (context) => const MobileForm(),
+          AppRoutes.plantForm: (context) => AppForm(),
         },
       ),
     );

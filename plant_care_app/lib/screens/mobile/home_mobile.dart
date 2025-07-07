@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:plant_care_app/routes/app_routes.dart';
 import 'package:plant_care_app/styles/app_style.dart';
 import 'package:plant_care_app/utils/chart/data.dart';
 import 'package:plant_care_app/utils/component/card/card_mobile.dart';
@@ -50,7 +51,8 @@ class HomeMobile extends StatelessWidget {
           SizedBox(height: 20),
           Center(
             child: ElevatedButton(
-              onPressed: () => Navigator.pushNamed(context, '/mobile-form'),
+              onPressed:
+                  () => Navigator.pushNamed(context, AppRoutes.plantMobileForm),
 
               //Navigator.pushNamed(context, '/form'),
               style: ButtonStyle(

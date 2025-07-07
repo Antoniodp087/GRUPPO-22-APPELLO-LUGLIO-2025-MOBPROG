@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:plant_care_app/routes/app_routes.dart';
 import 'package:plant_care_app/styles/app_style.dart';
 import 'package:plant_care_app/utils/chart/data.dart';
 import 'package:plant_care_app/utils/component/card/card.dart';
@@ -47,7 +48,8 @@ class Home extends StatelessWidget {
           SizedBox(height: 20),
           Center(
             child: ElevatedButton(
-              onPressed: () => Navigator.pushNamed(context, '/form'),
+              onPressed:
+                  () => Navigator.pushNamed(context, AppRoutes.plantForm),
               style: ButtonStyle(
                 backgroundColor: WidgetStatePropertyAll<Color>(
                   AppStyle.bgButtonPositive,
