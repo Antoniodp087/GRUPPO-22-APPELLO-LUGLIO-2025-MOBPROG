@@ -9,13 +9,17 @@ class JsonExporter {
 
   Future<void> exportToJson() async {
     final plants = await PlantCareDatabase.instance.getAllPlants();
+    final categories = await PlantCareDatabase.instance.getAllCategories();
+    //COMBINE TABLE IN ONE JSON
+    final combined = {'plants': plants, 'categories': categories};
 
-    final jsonString = jsonEncode(plants);
+    final jsonString = jsonEncode(combined);
 
     final directory = await getApplicationDocumentsDirectory();
     final file = File('${directory.path}/plants.json');
 
     await file.writeAsString(jsonString);
+
     print('JSON aggiornato in: ${file.path}');
   }
 

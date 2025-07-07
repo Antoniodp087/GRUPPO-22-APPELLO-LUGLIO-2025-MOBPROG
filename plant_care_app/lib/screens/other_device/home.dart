@@ -47,13 +47,13 @@ class Home extends StatelessWidget {
           SizedBox(height: 20),
           Center(
             child: ElevatedButton(
-              onPressed: () => (print('premuto')),
-              child: Text('Nuova pianta', style: AppStyle.button),
+              onPressed: () => Navigator.pushNamed(context, '/form'),
               style: ButtonStyle(
                 backgroundColor: WidgetStatePropertyAll<Color>(
                   AppStyle.bgButtonPositive,
                 ),
               ),
+              child: Text('Nuova pianta', style: AppStyle.button),
             ),
           ),
         ],

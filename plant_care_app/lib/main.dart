@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:plant_care_app/responsive/responsive_base.dart';
+import 'package:plant_care_app/screens/mobile/n_m_plant_mobile.dart';
+import 'package:plant_care_app/screens/other_device/n_m_plant_detail.dart';
 
 void main() {
   runApp(const MainApp());
@@ -18,6 +20,11 @@ class MainApp extends StatelessWidget {
           colorScheme: ColorScheme.fromSeed(seedColor: Colors.green),
         ),
         home: ResponsiveBase(),
+        routes: {
+          //'/': (context) => const PlantListPage(),
+          '/mobile-form': (context) => const MobileForm(),
+          '/form': (context) => AppForm(),
+        },
       ),
     );
   }

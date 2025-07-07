@@ -26,21 +26,29 @@ class PlantCareDatabase {
   //DATABASE CREATE TABLE
   Future _createDB(Database db, int version) async {
     await db.execute('''
+      CREATE TABLE categories (
+        id INTEGER PRIMARY KEY AUTOINCREMENT,
+        name TEXT NOT NULL UNIQUE
+      )
+    ''');
+
+    await db.execute('''
       CREATE TABLE plants(
         id INTEGER PRIMARY KEY AUTOINCREMENT,
         name TEXT,
         species TEXT,
         description TEXT,
         planted_on TEXT,
-        category TEXT,
+        category INTEGER,
         last_watering TEXT,
         last_pruning TEXT,
         last transfer TEXT,
         next_watering TEXT,
         next_pruning TEXT,
         next transfer TEXT,
-        status TEXT
-        note TEXT
+        status TEXT,
+        note TEXT,
+        FOREIGN KEY (category_id) REFERENCES categories (id)
       )
     ''');
   }
@@ -49,6 +57,13 @@ class PlantCareDatabase {
   Future<int> insertPlant(Map<String, dynamic> plant) async {
     final db = await instance.database;
     return await db.insert('plants', plant);
+  }
+
+  Future<int> insertCategory(String name) async {
+    final db = await instance.database;
+    return await db.insert('categories', {
+      'name': name,
+    }, conflictAlgorithm: ConflictAlgorithm.ignore);
   }
 
   //DATABASE RETURN ELEMENT
@@ -61,10 +76,29 @@ class PlantCareDatabase {
     throw Exception('Plant $id not found');
   }
 
+  Future<Map<String, dynamic>> getCategory(int id) async {
+    final db = await instance.database;
+    final result = await db.query(
+      'categories',
+      where: 'id = ?',
+      whereArgs: [id],
+    );
+    if (result.isNotEmpty) {
+      return result.first;
+    } else {
+      throw Exception('Category with ID $id not found');
+    }
+  }
+
   //DATABASE RETURN ALL ELEMENT
   Future<List<Map<String, dynamic>>> getAllPlants() async {
     final db = await instance.database;
     return await db.query('plants');
+  }
+
+  Future<List<Map<String, dynamic>>> getAllCategories() async {
+    final db = await instance.database;
+    return await db.query('categories');
   }
 
   //DATABASE UPDATE ELEMENT
@@ -73,10 +107,25 @@ class PlantCareDatabase {
     return await db.update('plants', plant, where: 'id = ?', whereArgs: [id]);
   }
 
+  Future<int> updateCategory(int id, String newName) async {
+    final db = await instance.database;
+    return await db.update(
+      'categories',
+      {'name': newName},
+      where: 'id = ?',
+      whereArgs: [id],
+    );
+  }
+
   //DATABASE DELETE ELEMENT
   Future<int> deletePlant(int id) async {
     final db = await instance.database;
     return await db.delete('plants', where: 'id = ?', whereArgs: [id]);
+  }
+
+  Future<int> deleteCategory(int id) async {
+    final db = await instance.database;
+    return await db.delete('categories', where: 'id = ?', whereArgs: [id]);
   }
 
   Future close() async {

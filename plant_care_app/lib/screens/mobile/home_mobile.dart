@@ -50,13 +50,15 @@ class HomeMobile extends StatelessWidget {
           SizedBox(height: 20),
           Center(
             child: ElevatedButton(
-              onPressed: () => (print('premuto')),
-              child: Text('Nuova pianta', style: AppStyle.mobileButton),
+              onPressed: () => Navigator.pushNamed(context, '/mobile-form'),
+
+              //Navigator.pushNamed(context, '/form'),
               style: ButtonStyle(
                 backgroundColor: WidgetStatePropertyAll<Color>(
                   AppStyle.bgButtonPositive,
                 ),
               ),
+              child: Text('Nuova pianta', style: AppStyle.mobileButton),
             ),
           ),
         ],
