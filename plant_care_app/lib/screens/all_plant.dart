@@ -51,11 +51,6 @@ class AllPlantMobile extends StatelessWidget {
         ),
 
         AppCategory(category: plant['categoria']),
-        Task(
-          annaffiare: DateTime.parse(plant['ultima_innaffiatura']),
-          potare: DateTime.parse(plant['ultima_potatura']),
-          travasare: DateTime.parse(plant['ultima_travasatura']),
-        ),
       ],
     );
   }

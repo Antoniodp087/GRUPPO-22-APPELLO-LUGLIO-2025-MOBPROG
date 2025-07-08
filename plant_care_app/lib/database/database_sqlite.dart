@@ -156,6 +156,7 @@ class PlantCareDatabase {
       SELECT 
         id,
         name,
+        species,
         image,
         next_watering AS watering,
         CAST(
@@ -174,6 +175,7 @@ class PlantCareDatabase {
       SELECT 
         id,
         name,
+        species,
         image,
         next_pruning AS pruning,
         CAST(
@@ -192,6 +194,7 @@ class PlantCareDatabase {
       SELECT 
         id,
         name,
+        species,
         image,
         next_transfer AS transfer,
         CAST(

@@ -44,7 +44,6 @@ class AllComponent extends StatelessWidget {
               AppCategory(category: 'categoria2', number: 3),
               AppCard(plantName: 'plantName', plantType: "plant"),
               AppDescriptionElement(description: "description"),
-              Task(annaffiare: oggi, potare: domani, travasare: ieri),
             ],
           ),
         ),

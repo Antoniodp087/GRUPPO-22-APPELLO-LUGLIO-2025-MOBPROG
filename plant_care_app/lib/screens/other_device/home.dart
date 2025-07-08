@@ -21,11 +21,7 @@ class Home extends StatelessWidget {
             SizedBox(height: 20),
             Center(child: SizedBox(height: 400, child: PlantList())),
             Text("Tasks", style: AppStyle.mobileHeadLine1),
-            Task(
-              annaffiare: DateTime.now(),
-              potare: DateTime.now(),
-              travasare: DateTime.now(),
-            ),
+            Task(),
             SizedBox(height: 20),
             Center(
               child: ElevatedButton(
