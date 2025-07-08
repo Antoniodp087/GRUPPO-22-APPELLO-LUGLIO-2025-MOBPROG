@@ -2,7 +2,6 @@ import 'package:flutter/material.dart';
 import 'package:plant_care_app/database/database_sqlite.dart';
 import 'package:plant_care_app/screens/mobile/n_m_plant_mobile.dart';
 import 'package:plant_care_app/utils/component/card/card.dart';
-import 'package:plant_care_app/utils/component/card/card_mobile.dart';
 
 class PlantList extends StatefulWidget {
   const PlantList({super.key, this.count});
@@ -26,7 +25,6 @@ class _PlantListState extends State<PlantList> {
     setState(() {
       plants = data;
     });
-    print(plants);
   }
 
   @override

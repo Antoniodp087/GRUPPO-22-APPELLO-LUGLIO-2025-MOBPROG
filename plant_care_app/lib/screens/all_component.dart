@@ -32,7 +32,7 @@ class AllComponent extends StatelessWidget {
               MobileAppCategory(category: 'categoria1', number: 4),
               AppCardMobile(plantName: "nome pianta"),
               AppDescriptionElementMobile(description: "description"),
-              MobileTask(annaffiare: oggi, potare: domani, travasare: ieri),
+              MobileTask(),
 
               //AppStyle.smilingFaceEmoji,
               //AppStyle.pottedPlantEmojiMobile,

@@ -11,6 +11,7 @@ class AppStyle {
   //TEXT COLOR
   static Color titleAndText = Color(0xFF050A05);
   static Color buttonText = Color(0xFFFAF1E2);
+  static Color textAllert = Color(0xFFC57B58);
 
   //BACKGROUND COLOR
   static Color bgCard = Color(0xFFBEE5AA);
@@ -73,6 +74,12 @@ class AppStyle {
   static TextStyle mobileHeadLine1 = GoogleFonts.quicksand(
     fontSize: 30,
     fontWeight: FontWeight.bold,
+  );
+  //MOBILE ALLERT TEXT STYLE
+  static TextStyle mobileTextAllert = GoogleFonts.quicksand(
+    fontSize: 20,
+    fontWeight: FontWeight.bold,
+    color: textAllert,
   );
 
   //MOBILE CIRCUMSTANTIAL TEXT STYLE

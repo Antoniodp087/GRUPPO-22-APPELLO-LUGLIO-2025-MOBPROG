@@ -1,8 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:plant_care_app/routes/app_routes.dart';
 import 'package:plant_care_app/styles/app_style.dart';
-import 'package:plant_care_app/utils/chart/data.dart';
-import 'package:plant_care_app/utils/component/card/card.dart';
 import 'package:plant_care_app/utils/component/double_text.dart';
 import 'package:plant_care_app/utils/component/task/task.dart';
 import 'package:plant_care_app/utils/plant_list_horizontal.dart';

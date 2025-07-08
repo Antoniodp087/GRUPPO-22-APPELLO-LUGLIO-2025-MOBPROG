@@ -149,6 +149,61 @@ class PlantCareDatabase {
     }
   }
 
+  // UPCOMING CARE TASK QUERIES
+  Future<List<Map<String, dynamic>>> getUpcomingWaterings() async {
+    final db = await instance.database;
+    return await db.rawQuery('''
+      SELECT 
+        id,
+        name,
+        image,
+        next_watering AS watering,
+        CAST(
+          julianday(substr(next_watering, 7, 4) || '-' || substr(next_watering, 4, 2) || '-' || substr(next_watering, 1, 2)) 
+          - julianday(CURRENT_DATE)
+        AS INTEGER) AS days_left
+      FROM plants
+      WHERE days_left <= 7
+      ORDER BY days_left ASC
+    ''');
+  }
+
+  Future<List<Map<String, dynamic>>> getUpcomingPrunings() async {
+    final db = await instance.database;
+    return await db.rawQuery('''
+      SELECT 
+        id,
+        name,
+        image,
+        next_pruning AS pruning,
+        CAST(
+          julianday(substr(next_pruning, 7, 4) || '-' || substr(next_pruning, 4, 2) || '-' || substr(next_pruning, 1, 2)) 
+          - julianday(CURRENT_DATE)
+        AS INTEGER) AS days_left
+      FROM plants
+      WHERE days_left <= 60
+      ORDER BY days_left ASC
+    ''');
+  }
+
+  Future<List<Map<String, dynamic>>> getUpcomingTransfers() async {
+    final db = await instance.database;
+    return await db.rawQuery('''
+      SELECT 
+        id,
+        name,
+        image,
+        next_transfer AS transfer,
+        CAST(
+          julianday(substr(next_transfer, 7, 4) || '-' || substr(next_transfer, 4, 2) || '-' || substr(next_transfer, 1, 2)) 
+          - julianday(CURRENT_DATE)
+        AS INTEGER) AS days_left
+      FROM plants
+      WHERE days_left BETWEEN 0 AND 90
+      ORDER BY days_left ASC
+    ''');
+  }
+
   Future close() async {
     final db = await instance.database;
     db.close();

@@ -36,11 +36,7 @@ class AllPlantMobile extends StatelessWidget {
 
         MobileAppCategory(category: plant['categoria']),
 
-        MobileTask(
-          annaffiare: DateTime.parse(plant['ultima_innaffiatura']),
-          potare: DateTime.parse(plant['ultima_potatura']),
-          travasare: DateTime.parse(plant['ultima_travasatura']),
-        ),
+        MobileTask(),
         AppCard(
           plantName: plant['nome'],
           image: NetworkImage(plant['immagine']),

@@ -1,8 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:plant_care_app/routes/app_routes.dart';
 import 'package:plant_care_app/styles/app_style.dart';
-import 'package:plant_care_app/utils/chart/data.dart';
-import 'package:plant_care_app/utils/component/card/card_mobile.dart';
 import 'package:plant_care_app/utils/component/mobile_double_text.dart';
 import 'package:plant_care_app/utils/component/task/task_mobile.dart';
 import 'package:plant_care_app/utils/plant_list_vertical.dart';
@@ -26,11 +24,7 @@ class HomeMobile extends StatelessWidget {
             child: SizedBox(height: 400, width: 350, child: MobilePlantList()),
           ),
           Text("Tasks", style: AppStyle.mobileHeadLine1),
-          MobileTask(
-            annaffiare: DateTime.now(),
-            potare: DateTime.now(),
-            travasare: DateTime.now(),
-          ),
+          MobileTask(),
           SizedBox(height: 20),
           Center(
             child: ElevatedButton(
