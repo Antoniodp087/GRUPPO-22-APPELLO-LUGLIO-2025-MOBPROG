@@ -5,6 +5,7 @@ import 'package:plant_care_app/utils/chart/data.dart';
 import 'package:plant_care_app/utils/component/card/card_mobile.dart';
 import 'package:plant_care_app/utils/component/mobile_double_text.dart';
 import 'package:plant_care_app/utils/component/task/task_mobile.dart';
+import 'package:plant_care_app/utils/plant_list_vertical.dart';
 
 class HomeMobile extends StatelessWidget {
   const HomeMobile({super.key});
@@ -22,25 +23,7 @@ class HomeMobile extends StatelessWidget {
           ),
           SizedBox(height: 20),
           Center(
-            child: SizedBox(
-              height: 400,
-              width: 350,
-              child: ListView(
-                scrollDirection: Axis.vertical,
-                children:
-                    plantsList
-                        .map(
-                          (singlePlant) => Container(
-                            margin: EdgeInsets.only(bottom: 20),
-                            child: AppCardMobile(
-                              plantName: singlePlant['nome'],
-                              image: NetworkImage(singlePlant['immagine']),
-                            ),
-                          ),
-                        )
-                        .toList(),
-              ),
-            ),
+            child: SizedBox(height: 400, width: 350, child: MobilePlantList()),
           ),
           Text("Tasks", style: AppStyle.mobileHeadLine1),
           MobileTask(

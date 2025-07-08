@@ -40,9 +40,6 @@ class AppCardMobile extends StatelessWidget {
               SizedBox(width: 8),
             ],
           ),
-          onTap: () {
-            print('$plantName card tapped');
-          },
         ),
       ),
     );

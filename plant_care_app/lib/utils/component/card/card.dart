@@ -56,9 +56,6 @@ class AppCard extends StatelessWidget {
               ),
             ],
           ),
-          onTap: () {
-            print('$plantName card tapped');
-          },
         ),
       ),
     );
