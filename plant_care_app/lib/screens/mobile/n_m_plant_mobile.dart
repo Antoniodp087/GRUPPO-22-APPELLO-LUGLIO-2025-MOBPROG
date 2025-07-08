@@ -91,6 +91,8 @@ class _MobileFormState extends State<MobileForm> {
     String dateString = plantedOnController.text;
 
     final formatter = DateFormat('dd/MM/yyyy');
+    final todayString = formatter.format(DateTime.now());
+
     DateTime originalDate = formatter.parse(dateString);
     DateTime nextWatering = originalDate.add(Duration(days: 2));
     DateTime nextPruning = originalDate.add(Duration(days: 60));
@@ -108,7 +110,7 @@ class _MobileFormState extends State<MobileForm> {
 
     if (widget.plantId != null) {
       if (watering) {
-        dateString = nextWateringController.text;
+        dateString = todayString;
         originalDate = formatter.parse(dateString);
         nextWatering = originalDate.add(Duration(days: 2));
         nextWateringString = formatter.format(nextWatering);
@@ -116,7 +118,7 @@ class _MobileFormState extends State<MobileForm> {
         nextWateringController.text = nextWateringString;
       }
       if (pruning) {
-        dateString = nextPruningController.text;
+        dateString = todayString;
         originalDate = formatter.parse(dateString);
         nextPruning = originalDate.add(Duration(days: 60));
         nextPruningString = formatter.format(nextPruning);
@@ -124,7 +126,7 @@ class _MobileFormState extends State<MobileForm> {
         nextPruningController.text = nextPruningString;
       }
       if (transfer) {
-        dateString = nextTransferController.text;
+        dateString = todayString;
         originalDate = formatter.parse(dateString);
         nextTransfer = originalDate.add(Duration(days: 365));
         nextTransferString = formatter.format(nextTransfer);
