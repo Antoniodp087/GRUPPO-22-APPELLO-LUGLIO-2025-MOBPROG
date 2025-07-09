@@ -4,7 +4,7 @@ import 'package:plant_care_app/routes/app_routes.dart';
 import 'package:plant_care_app/screens/mobile/n_m_category_mobile.dart';
 import 'package:plant_care_app/screens/other_device/n_m_category.dart';
 import 'package:plant_care_app/styles/app_style.dart';
-import 'package:plant_care_app/utils/component/category.dart';
+import 'package:plant_care_app/utils/category/category.dart';
 
 class CategoryHome extends StatefulWidget {
   const CategoryHome({super.key});

@@ -108,12 +108,14 @@ class _AppFormState extends State<AppForm> {
     String nextPruningString = formatter.format(nextPruning);
     String nextTransferString = formatter.format(nextTransfer);
 
-    lastWateringController = plantedOnController;
-    lastPruningController = plantedOnController;
-    lastTransferController = plantedOnController;
-    nextWateringController.text = nextWateringString;
-    nextPruningController.text = nextPruningString;
-    nextTransferController.text = nextTransferString;
+    if (widget.plantId == null) {
+      lastWateringController = plantedOnController;
+      lastPruningController = plantedOnController;
+      lastTransferController = plantedOnController;
+      nextWateringController.text = nextWateringString;
+      nextPruningController.text = nextPruningString;
+      nextTransferController.text = nextTransferString;
+    }
 
     if (widget.plantId != null) {
       if (watering) {

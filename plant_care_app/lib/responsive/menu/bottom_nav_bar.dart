@@ -3,6 +3,7 @@ import 'package:plant_care_app/screens/all_sqlite_plant.dart';
 import 'package:plant_care_app/screens/mobile/category_home_mobile.dart';
 import 'package:plant_care_app/screens/mobile/home_mobile.dart';
 import 'package:plant_care_app/screens/mobile/plant_detail_mobile.dart';
+import 'package:plant_care_app/screens/mobile/search_mobile.dart';
 import 'package:plant_care_app/styles/app_style.dart';
 
 class BottomNavBar extends StatefulWidget {
@@ -24,7 +25,7 @@ class _BottomNavBarState extends State<BottomNavBar> {
   final appScreens = [
     HomeMobile(),
     CategoryHomeMobile(),
-    PlantListPage(),
+    SearchPageMobile(),
     PlantDetailMobile(),
   ];
 

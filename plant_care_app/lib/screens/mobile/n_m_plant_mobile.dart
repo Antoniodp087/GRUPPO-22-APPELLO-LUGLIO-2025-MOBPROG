@@ -90,10 +90,6 @@ class _MobileFormState extends State<MobileForm> {
       nextTransferController.text = data['next_transfer'] ?? "";
       status = data['status'];
       noteController.text = data['note'] ?? "";
-      final tasks = (data['tasks'] ?? '').split(',');
-      watering = tasks.contains('car1');
-      pruning = tasks.contains('car2');
-      transfer = tasks.contains('car3');
 
       isDateEditable = false;
     });
@@ -113,12 +109,14 @@ class _MobileFormState extends State<MobileForm> {
     String nextPruningString = formatter.format(nextPruning);
     String nextTransferString = formatter.format(nextTransfer);
 
-    lastWateringController = plantedOnController;
-    lastPruningController = plantedOnController;
-    lastTransferController = plantedOnController;
-    nextWateringController.text = nextWateringString;
-    nextPruningController.text = nextPruningString;
-    nextTransferController.text = nextTransferString;
+    if (widget.plantId == null) {
+      lastWateringController = plantedOnController;
+      lastPruningController = plantedOnController;
+      lastTransferController = plantedOnController;
+      nextWateringController.text = nextWateringString;
+      nextPruningController.text = nextPruningString;
+      nextTransferController.text = nextTransferString;
+    }
 
     if (widget.plantId != null) {
       if (watering) {
