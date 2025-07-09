@@ -7,7 +7,6 @@ import 'package:plant_care_app/utils/component/double_text.dart';
 import 'package:plant_care_app/utils/component/mobile_category.dart';
 import 'package:plant_care_app/utils/component/mobile_description.dart';
 import 'package:plant_care_app/utils/component/mobile_double_text.dart';
-import 'package:plant_care_app/utils/component/task/task.dart';
 import 'package:plant_care_app/utils/component/task/task_mobile.dart';
 
 class AllComponent extends StatelessWidget {

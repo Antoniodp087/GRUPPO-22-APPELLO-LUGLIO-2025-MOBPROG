@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:intl/intl.dart';
 import 'package:plant_care_app/database/database_sqlite.dart';
 import 'package:plant_care_app/styles/app_style.dart';
@@ -25,6 +26,14 @@ class _AppFormState extends State<AppForm> {
   final TextEditingController plantedOnController = TextEditingController();
 
   String? category;
+
+  final TextEditingController wateringFrequencyController =
+      TextEditingController();
+
+  final TextEditingController pruningFrequencyController =
+      TextEditingController();
+  final TextEditingController transferFrequencyController =
+      TextEditingController();
 
   TextEditingController lastWateringController = TextEditingController();
   TextEditingController lastPruningController = TextEditingController();
@@ -70,6 +79,9 @@ class _AppFormState extends State<AppForm> {
       descriptionController.text = data['description'] ?? "";
       plantedOnController.text = data['planted_on'] ?? "";
       selectedCategoryId = data['category_id'];
+      wateringFrequencyController.text = data['watering_frequency'] ?? "";
+      pruningFrequencyController.text = data['pruning_frequency'] ?? "";
+      transferFrequencyController.text = data['transfer_frequency'] ?? "";
       lastWateringController.text = data['last_watering'] ?? "";
       lastPruningController.text = data['last_pruning'] ?? "";
       lastTransferController.text = data['last_transfer'] ?? "";
@@ -78,11 +90,6 @@ class _AppFormState extends State<AppForm> {
       nextTransferController.text = data['next_transfer'] ?? "";
       status = data['status'];
       noteController.text = data['note'] ?? "";
-      final tasks = (data['tasks'] ?? '').split(',');
-      watering = tasks.contains('car1');
-      pruning = tasks.contains('car2');
-      transfer = tasks.contains('car3');
-
       isDateEditable = false;
     });
   }
@@ -112,7 +119,9 @@ class _AppFormState extends State<AppForm> {
       if (watering) {
         dateString = todayString;
         originalDate = formatter.parse(dateString);
-        nextWatering = originalDate.add(Duration(days: 2));
+        nextWatering = originalDate.add(
+          Duration(days: int.parse(wateringFrequencyController.text)),
+        );
         nextWateringString = formatter.format(nextWatering);
         lastWateringController = nextWateringController;
         nextWateringController.text = nextWateringString;
@@ -120,7 +129,9 @@ class _AppFormState extends State<AppForm> {
       if (pruning) {
         dateString = todayString;
         originalDate = formatter.parse(dateString);
-        nextPruning = originalDate.add(Duration(days: 60));
+        nextPruning = originalDate.add(
+          Duration(days: int.parse(pruningFrequencyController.text)),
+        );
         nextPruningString = formatter.format(nextPruning);
         lastPruningController = nextPruningController;
         nextPruningController.text = nextPruningString;
@@ -128,7 +139,9 @@ class _AppFormState extends State<AppForm> {
       if (transfer) {
         dateString = todayString;
         originalDate = formatter.parse(dateString);
-        nextTransfer = originalDate.add(Duration(days: 365));
+        nextTransfer = originalDate.add(
+          Duration(days: int.parse(transferFrequencyController.text)),
+        );
         nextTransferString = formatter.format(nextTransfer);
         lastTransferController = nextTransferController;
         nextTransferController.text = nextTransferString;
@@ -156,6 +169,41 @@ class _AppFormState extends State<AppForm> {
       }
     }
 
+    DateTime? parseGgMmAaaa(String str) {
+      try {
+        final parts = str.split('/');
+        if (parts.length != 3) return null;
+        return DateTime(
+          int.parse(parts[2]),
+          int.parse(parts[1]),
+          int.parse(parts[0]),
+        );
+      } catch (_) {
+        return null;
+      }
+    }
+
+    // Calcolo status
+    final now = DateTime.now();
+    int overdueCount = 0;
+
+    final wateringDate = parseGgMmAaaa(nextWateringController.text);
+    final pruningDate = parseGgMmAaaa(nextPruningController.text);
+    final transferDate = parseGgMmAaaa(nextTransferController.text);
+
+    if (wateringDate != null && wateringDate.isBefore(now)) overdueCount++;
+    if (pruningDate != null && pruningDate.isBefore(now)) overdueCount++;
+    if (transferDate != null && transferDate.isBefore(now)) overdueCount++;
+
+    String status;
+    if (overdueCount >= 2) {
+      status = 'malata';
+    } else if (overdueCount == 1) {
+      status = 'da controllare';
+    } else {
+      status = 'sana';
+    }
+
     final data = {
       'name': nameController.text,
       'species': speciesController.text,
@@ -163,6 +211,9 @@ class _AppFormState extends State<AppForm> {
       'description': descriptionController.text,
       'planted_on': plantedOnController.text,
       'category_id': categoryIdToSave,
+      'watering_frequency': wateringFrequencyController.text,
+      'pruning_frequency': pruningFrequencyController.text,
+      'transfer_frequency': transferFrequencyController.text,
       'last_watering': lastWateringController.text,
       'last_pruning': lastPruningController.text,
       'last_transfer': lastTransferController.text,
@@ -309,38 +360,57 @@ class _AppFormState extends State<AppForm> {
                     ),
                   ),
                 SizedBox(height: 20),
-
-                CheckboxListTile(
-                  value: watering,
-                  onChanged: (val) => setState(() => watering = val!),
-                  title: const Text('Innaffiata'),
-                ),
-                CheckboxListTile(
-                  value: pruning,
-                  onChanged: (val) => setState(() => pruning = val!),
-                  title: const Text('Potata'),
-                ),
-                CheckboxListTile(
-                  value: transfer,
-                  onChanged: (val) => {setState(() => transfer = val!)},
-                  title: const Text('Travasata'),
-                ),
-                SizedBox(height: 20),
-                DropdownButtonFormField<String>(
-                  value: status,
-                  items: const [
-                    DropdownMenuItem(value: 'Sano', child: Text('Sano')),
-                    DropdownMenuItem(value: 'Malato', child: Text('Malato')),
-                    DropdownMenuItem(
-                      value: 'Da controllare',
-                      child: Text('In crescita'),
-                    ),
-                  ],
-                  onChanged: (val) => setState(() => status = val),
-                  decoration: const InputDecoration(
-                    labelText: 'Stato',
+                TextFormField(
+                  controller: wateringFrequencyController,
+                  keyboardType: TextInputType.number,
+                  inputFormatters: [FilteringTextInputFormatter.digitsOnly],
+                  decoration: InputDecoration(
+                    labelText: 'Frequenza di annaffiatura in giorni',
                     border: OutlineInputBorder(),
                   ),
+                ),
+                SizedBox(height: 20),
+                TextFormField(
+                  controller: pruningFrequencyController,
+                  keyboardType: TextInputType.number,
+                  inputFormatters: [FilteringTextInputFormatter.digitsOnly],
+                  decoration: InputDecoration(
+                    labelText: 'Frequenza di potatura in giorni',
+                    border: OutlineInputBorder(),
+                  ),
+                ),
+                SizedBox(height: 20),
+                TextFormField(
+                  controller: transferFrequencyController,
+                  keyboardType: TextInputType.number,
+                  inputFormatters: [FilteringTextInputFormatter.digitsOnly],
+                  decoration: InputDecoration(
+                    labelText: 'Frequenza di travaso in giorn',
+                    border: OutlineInputBorder(),
+                  ),
+                ),
+                SizedBox(height: 20),
+
+                Column(
+                  children: [
+                    if (widget.plantId != null) ...[
+                      CheckboxListTile(
+                        value: watering,
+                        onChanged: (val) => setState(() => watering = val!),
+                        title: const Text('Innaffiata'),
+                      ),
+                      CheckboxListTile(
+                        value: pruning,
+                        onChanged: (val) => setState(() => pruning = val!),
+                        title: const Text('Potata'),
+                      ),
+                      CheckboxListTile(
+                        value: transfer,
+                        onChanged: (val) => setState(() => transfer = val!),
+                        title: const Text('Travasata'),
+                      ),
+                    ],
+                  ],
                 ),
                 SizedBox(height: 20),
 

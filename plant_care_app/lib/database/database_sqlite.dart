@@ -41,6 +41,9 @@ class PlantCareDatabase {
         description TEXT,
         planted_on TEXT,
         category_id INTEGER,
+        watering_frequency TEXT,
+        pruning_frequency TEXT,
+        transfer_frequency TEXT,
         last_watering TEXT,
         last_pruning TEXT,
         last_transfer TEXT,
@@ -164,7 +167,7 @@ class PlantCareDatabase {
           - julianday(CURRENT_DATE)
         AS INTEGER) AS days_left
       FROM plants
-      WHERE days_left <= 7
+      WHERE days_left <= watering_frequency
       ORDER BY days_left ASC
     ''');
   }
@@ -183,7 +186,7 @@ class PlantCareDatabase {
           - julianday(CURRENT_DATE)
         AS INTEGER) AS days_left
       FROM plants
-      WHERE days_left <= 60
+      WHERE days_left <= pruning_frequency
       ORDER BY days_left ASC
     ''');
   }
@@ -202,7 +205,7 @@ class PlantCareDatabase {
           - julianday(CURRENT_DATE)
         AS INTEGER) AS days_left
       FROM plants
-      WHERE days_left BETWEEN 0 AND 90
+      WHERE days_left <= transfer_frequency
       ORDER BY days_left ASC
     ''');
   }

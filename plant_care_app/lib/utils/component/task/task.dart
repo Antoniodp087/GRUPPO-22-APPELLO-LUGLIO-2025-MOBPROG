@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:plant_care_app/database/database_sqlite.dart';
-import 'package:plant_care_app/screens/other_device/n_m_plant_detail.dart';
+import 'package:plant_care_app/screens/other_device/n_m_plant.dart';
 import 'package:plant_care_app/styles/app_style.dart';
 import 'package:plant_care_app/utils/component/card/card.dart';
 

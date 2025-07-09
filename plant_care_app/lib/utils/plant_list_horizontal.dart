@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:plant_care_app/database/database_sqlite.dart';
-import 'package:plant_care_app/screens/mobile/n_m_plant_mobile.dart';
+import 'package:plant_care_app/screens/other_device/n_m_plant.dart';
 import 'package:plant_care_app/utils/component/card/card.dart';
 
 class PlantList extends StatefulWidget {
@@ -50,7 +50,7 @@ class _PlantListState extends State<PlantList> {
               await Navigator.push(
                 context,
                 MaterialPageRoute(
-                  builder: (context) => MobileForm(plantId: plant['id']),
+                  builder: (context) => AppForm(plantId: plant['id']),
                 ),
               );
               _loadPlants();

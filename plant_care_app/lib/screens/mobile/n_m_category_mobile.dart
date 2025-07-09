@@ -56,17 +56,33 @@ class _CategoryMobileFormState extends State<CategoryMobileForm> {
 
   @override
   Widget build(BuildContext context) {
+    String title;
+    if (widget.categoryId != null) {
+      title = nameController.text;
+    } else {
+      title = 'Nuova pianta';
+    }
     return SafeArea(
       child: Scaffold(
-        appBar: AppBar(title: Text('Nuova categoria')),
+        appBar: AppBar(title: Text(title)),
         body: Column(
+          mainAxisAlignment: MainAxisAlignment.center,
+          crossAxisAlignment: CrossAxisAlignment.center,
           children: [
+            SizedBox(height: 10),
             Center(
-              child: Form(
-                key: _formKey,
-                child: TextFormField(
-                  controller: nameController,
-                  decoration: InputDecoration(labelText: 'Categoria'),
+              child: Container(
+                width: 250,
+                height: 300,
+                child: Form(
+                  key: _formKey,
+                  child: TextFormField(
+                    controller: nameController,
+                    decoration: InputDecoration(
+                      labelText: 'Categoria',
+                      border: OutlineInputBorder(),
+                    ),
+                  ),
                 ),
               ),
             ),

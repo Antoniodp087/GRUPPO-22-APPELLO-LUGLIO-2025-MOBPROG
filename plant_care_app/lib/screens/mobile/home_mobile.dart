@@ -19,9 +19,9 @@ class HomeMobile extends StatelessWidget {
             bigText: 'Plant Care',
             smallText: 'le mie piante',
           ),
-          SizedBox(height: 20),
+          SizedBox(height: 10),
           Center(
-            child: SizedBox(height: 400, width: 350, child: MobilePlantList()),
+            child: SizedBox(height: 350, width: 350, child: MobilePlantList()),
           ),
           Text("Tasks", style: AppStyle.mobileHeadLine1),
           MobileTask(),

@@ -82,7 +82,7 @@ class _CategoryHomeMobileState extends State<CategoryHomeMobile> {
               await _loadCategoriesAndCounts();
             },
             style: ButtonStyle(
-              backgroundColor: MaterialStateProperty.all<Color>(
+              backgroundColor: WidgetStateProperty.all<Color>(
                 AppStyle.bgButtonPositive,
               ),
             ),
