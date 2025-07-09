@@ -43,7 +43,6 @@ class _CategoryFormState extends State<CategoryForm> {
     await JsonExporter.instance.exportToJson();
 
     if (context.mounted) Navigator.pop(context);
-    2;
   }
 
   Future<void> _exit() async {

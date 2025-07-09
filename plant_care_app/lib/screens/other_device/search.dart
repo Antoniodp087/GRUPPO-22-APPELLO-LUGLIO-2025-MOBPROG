@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:plant_care_app/database/database_sqlite.dart';
+import 'package:plant_care_app/screens/other_device/plant_detail.dart';
 import 'package:plant_care_app/styles/app_style.dart';
+import 'package:plant_care_app/utils/component/card/card_mobile.dart';
 
 class SearchPage extends StatefulWidget {
   const SearchPage({super.key});
@@ -147,17 +149,39 @@ class _SearchPageState extends State<SearchPage> {
               child: Container(
                 padding: const EdgeInsets.all(8),
                 decoration: BoxDecoration(
-                  color: AppStyle.bgCard,
                   borderRadius: BorderRadius.circular(8),
                 ),
                 child:
                     filteredPlants.isEmpty
                         ? const Center(child: Text('Nessuna pianta trovata'))
-                        : ListView.builder(
+                        : GridView.builder(
+                          gridDelegate:
+                              const SliverGridDelegateWithMaxCrossAxisExtent(
+                                maxCrossAxisExtent:
+                                    300, // larghezza massima per card
+                                mainAxisExtent: 150, // altezza massima per card
+                                mainAxisSpacing: 10,
+                                crossAxisSpacing: 10,
+                              ),
                           itemCount: filteredPlants.length,
                           itemBuilder: (context, index) {
                             final plant = filteredPlants[index];
-                            return ListTile(title: Text(plant['name']));
+                            return GestureDetector(
+                              onTap: () async {
+                                await Navigator.push(
+                                  context,
+                                  MaterialPageRoute(
+                                    builder:
+                                        (context) =>
+                                            PlantDetail(plantId: plant['id']),
+                                  ),
+                                );
+                              },
+                              child: AppCardMobile(
+                                plantName: plant['name'],
+                                image: NetworkImage(plant['image']),
+                              ),
+                            );
                           },
                         ),
               ),

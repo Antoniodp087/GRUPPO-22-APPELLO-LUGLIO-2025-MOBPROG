@@ -43,7 +43,6 @@ class _CategoryMobileFormState extends State<CategoryMobileForm> {
     await JsonExporter.instance.exportToJson();
 
     if (context.mounted) Navigator.pop(context);
-    ;
   }
 
   Future<void> _exit() async {
@@ -51,7 +50,6 @@ class _CategoryMobileFormState extends State<CategoryMobileForm> {
       await PlantCareDatabase.instance.deleteCategory(widget.categoryId!);
     }
     Navigator.pop(context);
-    ;
   }
 
   @override

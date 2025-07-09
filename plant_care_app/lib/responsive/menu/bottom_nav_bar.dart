@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:plant_care_app/screens/all_sqlite_plant.dart';
 import 'package:plant_care_app/screens/mobile/category_home_mobile.dart';
 import 'package:plant_care_app/screens/mobile/home_mobile.dart';
 import 'package:plant_care_app/screens/mobile/plant_detail_mobile.dart';
@@ -26,7 +25,7 @@ class _BottomNavBarState extends State<BottomNavBar> {
     HomeMobile(),
     CategoryHomeMobile(),
     SearchPageMobile(),
-    PlantDetailMobile(),
+    PlantDetailMobile(plantId: 6),
   ];
 
   @override

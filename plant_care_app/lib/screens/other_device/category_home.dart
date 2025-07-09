@@ -1,10 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:plant_care_app/database/database_sqlite.dart';
 import 'package:plant_care_app/routes/app_routes.dart';
-import 'package:plant_care_app/screens/mobile/n_m_category_mobile.dart';
 import 'package:plant_care_app/screens/other_device/n_m_category.dart';
 import 'package:plant_care_app/styles/app_style.dart';
-import 'package:plant_care_app/utils/category/category.dart';
+import 'package:plant_care_app/utils/component/category/category.dart';
 
 class CategoryHome extends StatefulWidget {
   const CategoryHome({super.key});
@@ -42,52 +41,55 @@ class _CategoryHomeState extends State<CategoryHome> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      body: Column(
-        children: [
-          categories.isEmpty
-              ? const Expanded(
-                child: Center(child: Text('Nessuna categoria presente')),
-              )
-              : Expanded(
-                child: ListView.builder(
-                  itemCount: categories.length,
-                  itemBuilder: (context, index) {
-                    final category = categories[index];
-                    final num = categoryCounts[category['id']] ?? 0;
+      body: Padding(
+        padding: const EdgeInsets.only(top: 50.00),
+        child: Column(
+          children: [
+            categories.isEmpty
+                ? const Expanded(
+                  child: Center(child: Text('Nessuna categoria presente')),
+                )
+                : Expanded(
+                  child: ListView.builder(
+                    itemCount: categories.length,
+                    itemBuilder: (context, index) {
+                      final category = categories[index];
+                      final num = categoryCounts[category['id']] ?? 0;
 
-                    return ListTile(
-                      title: AppCategory(
-                        category: category['name'],
-                        number: num,
-                      ),
-                      onTap: () async {
-                        await Navigator.push(
-                          context,
-                          MaterialPageRoute(
-                            builder:
-                                (context) =>
-                                    CategoryForm(categoryId: category['id']),
-                          ),
-                        );
-                        await _loadCategoriesAndCounts();
-                      },
-                    );
-                  },
+                      return ListTile(
+                        title: AppCategory(
+                          category: category['name'],
+                          number: num,
+                        ),
+                        onTap: () async {
+                          await Navigator.push(
+                            context,
+                            MaterialPageRoute(
+                              builder:
+                                  (context) =>
+                                      CategoryForm(categoryId: category['id']),
+                            ),
+                          );
+                          await _loadCategoriesAndCounts();
+                        },
+                      );
+                    },
+                  ),
+                ),
+            ElevatedButton(
+              onPressed: () async {
+                await Navigator.pushNamed(context, AppRoutes.categoryForm);
+                await _loadCategoriesAndCounts();
+              },
+              style: ButtonStyle(
+                backgroundColor: WidgetStateProperty.all<Color>(
+                  AppStyle.bgButtonPositive,
                 ),
               ),
-          ElevatedButton(
-            onPressed: () async {
-              await Navigator.pushNamed(context, AppRoutes.categoryForm);
-              await _loadCategoriesAndCounts();
-            },
-            style: ButtonStyle(
-              backgroundColor: MaterialStateProperty.all<Color>(
-                AppStyle.bgButtonPositive,
-              ),
+              child: Text('Nuova categoria', style: AppStyle.button),
             ),
-            child: Text('Nuova categoria', style: AppStyle.button),
-          ),
-        ],
+          ],
+        ),
       ),
     );
   }

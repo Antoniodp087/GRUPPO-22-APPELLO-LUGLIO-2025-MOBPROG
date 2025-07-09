@@ -3,7 +3,7 @@ import 'package:plant_care_app/database/database_sqlite.dart';
 import 'package:plant_care_app/routes/app_routes.dart';
 import 'package:plant_care_app/screens/mobile/n_m_category_mobile.dart';
 import 'package:plant_care_app/styles/app_style.dart';
-import 'package:plant_care_app/utils/category/mobile_category.dart';
+import 'package:plant_care_app/utils/component/category/mobile_category.dart';
 
 class CategoryHomeMobile extends StatefulWidget {
   const CategoryHomeMobile({super.key});

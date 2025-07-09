@@ -1,11 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:plant_care_app/utils/component/card/card.dart';
 import 'package:plant_care_app/utils/component/card/card_mobile.dart';
-import 'package:plant_care_app/utils/category/category.dart';
-import 'package:plant_care_app/utils/description/description.dart';
+import 'package:plant_care_app/utils/component/category/category.dart';
+import 'package:plant_care_app/utils/component/description/description.dart';
 import 'package:plant_care_app/utils/component/double_text.dart';
-import 'package:plant_care_app/utils/category/mobile_category.dart';
-import 'package:plant_care_app/utils/description/mobile_description.dart';
+import 'package:plant_care_app/utils/component/category/mobile_category.dart';
+import 'package:plant_care_app/utils/component/description/mobile_description.dart';
 import 'package:plant_care_app/utils/component/mobile_double_text.dart';
 import 'package:plant_care_app/utils/component/task/task_mobile.dart';
 

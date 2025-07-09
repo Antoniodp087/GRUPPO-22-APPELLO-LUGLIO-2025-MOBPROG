@@ -132,6 +132,18 @@ class AppStyle {
   static Text bandedEmojiMobile = Text("🤕", style: TextStyle(fontSize: 30));
   static Text pensiveEmojiMobile = Text("😔", style: TextStyle(fontSize: 30));
 
+  static Text analysisSmilingFaceEmoji = Text(
+    "🥰",
+    style: TextStyle(fontSize: 70),
+  );
+  static Text analysisBandedEmoji = Text("🤕", style: TextStyle(fontSize: 70));
+  static Text analysisPensiveEmoji = Text("😔", style: TextStyle(fontSize: 70));
+
+  static Text analysisIndeterminateEmoji = Text(
+    "🤔",
+    style: TextStyle(fontSize: 70),
+  );
+
   //NAVIGATION ICON FILLED
   static FaIcon houseActive = FaIcon(
     FontAwesomeIcons.house,

@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:plant_care_app/styles/app_style.dart';
 
-class Status extends StatelessWidget {
-  const Status({super.key, required this.status});
+class AnalysisStatus extends StatelessWidget {
+  const AnalysisStatus({super.key, required this.status});
   final String status;
 
   @override
@@ -13,21 +13,21 @@ class Status extends StatelessWidget {
       case 'sana':
         {
           generalStatus = "SANO";
-          genearlEmoji = AppStyle.smilingFaceEmoji;
+          genearlEmoji = AppStyle.analysisSmilingFaceEmoji;
         }
 
         break;
       case 'da controllare':
         {
           generalStatus = "DA CONTROLLARE";
-          genearlEmoji = AppStyle.pensiveEmoji;
+          genearlEmoji = AppStyle.analysisPensiveEmoji;
         }
 
         break;
       case 'malata':
         {
           generalStatus = "PESSIMO";
-          genearlEmoji = AppStyle.bandedEmoji;
+          genearlEmoji = AppStyle.analysisBandedEmoji;
         }
 
         break;

@@ -262,8 +262,6 @@ class _AppFormState extends State<AppForm> {
 
   @override
   Widget build(BuildContext context) {
-    print('travasata $transfer');
-    print('travasata $nextTransferController');
     String title;
     if (widget.plantId != null) {
       title = nameController.text;
