@@ -132,6 +132,7 @@ class PlantCareDatabase {
     return await db.delete('categories', where: 'id = ?', whereArgs: [id]);
   }
 
+  // CATEGORY QUERY
   Future<int> getPlantCountByCategoryName(String categoryName) async {
     final db = await instance.database;
 
@@ -210,6 +211,53 @@ class PlantCareDatabase {
     ''');
   }
 
+  //CHART QUERIES
+  Future<int> getTotalPlantCount() async {
+    final db = await instance.database;
+    final result = await db.rawQuery('SELECT COUNT(*) as count FROM plants');
+    return Sqflite.firstIntValue(result) ?? 0;
+  }
+
+  Future<List<Map<String, dynamic>>> getPlantsPerMonth() async {
+    final db = await instance.database;
+    return await db.rawQuery('''
+    SELECT 
+      substr(planted_on, 4, 2) AS month,
+      COUNT(*) as count
+    FROM plants
+    WHERE planted_on IS NOT NULL AND planted_on != ''
+    GROUP BY month
+    ORDER BY month
+  ''');
+  }
+
+  Future<List<Map<String, dynamic>>> getCareActivitiesByMonth() async {
+    final db = await instance.database;
+    return await db.rawQuery('''
+    SELECT 
+      strftime('%m/%Y', date(substr(last_watering, 7, 4) || '-' || substr(last_watering, 4, 2) || '-' || substr(last_watering, 1, 2))) AS month_year,
+      COUNT(last_watering) as watering_count,
+      COUNT(last_pruning) as pruning_count,
+      COUNT(last_transfer) as transfer_count
+    FROM plants
+    WHERE last_watering IS NOT NULL 
+       OR last_pruning IS NOT NULL 
+       OR last_transfer IS NOT NULL
+    GROUP BY month_year
+    ORDER BY month_year ASC
+  ''');
+  }
+
+  Future<List<Map<String, dynamic>>> getPlantCountByStatus() async {
+    final db = await instance.database;
+    return await db.rawQuery('''
+    SELECT status, COUNT(*) as count
+    FROM plants
+    GROUP BY status
+  ''');
+  }
+
+  //CLOSE CONNECTION
   Future close() async {
     final db = await instance.database;
     db.close();

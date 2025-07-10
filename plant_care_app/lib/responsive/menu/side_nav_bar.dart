@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:plant_care_app/screens/all_component.dart';
+import 'package:plant_care_app/screens/other_device/analysis.dart';
 import 'package:plant_care_app/screens/other_device/category_home.dart';
 import 'package:plant_care_app/screens/other_device/home.dart';
 import 'package:plant_care_app/screens/other_device/search.dart';
@@ -29,7 +30,7 @@ class SideNavBar extends StatelessWidget {
         page = SearchPage();
       //break;
       case 3:
-        page = AllComponent();
+        page = Analysis();
       //break;
       default:
         throw UnimplementedError('no widget for $currentIndex');
