@@ -47,35 +47,29 @@ class _AppPieChartState extends State<AppPieChart> {
   Widget build(BuildContext context) {
     return isLoading
         ? const Center(child: CircularProgressIndicator())
-        : Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: [
-            const Text(
-              'Distribuzione delle Piante per Categoria',
-              style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
-            ),
-            const SizedBox(height: 20),
-            if (dataMap.isEmpty)
-              const Text("Nessuna pianta disponibile.")
-            else
-              PieChart(
-                dataMap: dataMap,
-                animationDuration: const Duration(milliseconds: 800),
-                chartRadius: MediaQuery.of(context).size.width / 2,
-                chartType: ChartType.ring,
-                centerText: _totalPlants.toString(),
-                chartLegendSpacing: 32,
-                legendOptions: const LegendOptions(
-                  showLegends: true,
-                  legendPosition: LegendPosition.right,
-                ),
-                chartValuesOptions: const ChartValuesOptions(
-                  showChartValuesInPercentage: true,
-                  showChartValuesOutside: true,
-                  decimalPlaces: 0,
-                ),
-              ),
-          ],
+        : SizedBox(
+          width: 350,
+          height: 700,
+          child:
+              dataMap.isEmpty
+                  ? const Text("Nessuna pianta disponibile.")
+                  : PieChart(
+                    dataMap: dataMap,
+                    animationDuration: const Duration(milliseconds: 800),
+                    chartRadius: MediaQuery.of(context).size.width / 2,
+                    chartType: ChartType.ring,
+                    centerText: _totalPlants.toString(),
+                    chartLegendSpacing: 32,
+                    legendOptions: const LegendOptions(
+                      showLegends: true,
+                      legendPosition: LegendPosition.right,
+                    ),
+                    chartValuesOptions: const ChartValuesOptions(
+                      showChartValuesInPercentage: true,
+                      showChartValuesOutside: true,
+                      decimalPlaces: 0,
+                    ),
+                  ),
         );
   }
 }

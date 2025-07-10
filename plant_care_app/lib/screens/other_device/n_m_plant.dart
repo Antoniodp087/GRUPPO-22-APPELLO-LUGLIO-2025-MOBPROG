@@ -115,6 +115,10 @@ class _AppFormState extends State<AppForm> {
       nextWateringController.text = nextWateringString;
       nextPruningController.text = nextPruningString;
       nextTransferController.text = nextTransferString;
+
+      nextWateringController.text = nextWateringString;
+      nextPruningController.text = nextPruningString;
+      nextTransferController.text = nextTransferString;
     }
 
     if (widget.plantId != null) {
@@ -147,6 +151,30 @@ class _AppFormState extends State<AppForm> {
         nextTransferString = formatter.format(nextTransfer);
         lastTransferController = nextTransferController;
         nextTransferController.text = nextTransferString;
+      }
+
+      final today = DateFormat('dd/MM/yyyy').format(DateTime.now());
+
+      if (watering) {
+        await PlantCareDatabase.instance.insertActivity(
+          widget.plantId!,
+          'watering',
+          today,
+        );
+      }
+      if (pruning) {
+        await PlantCareDatabase.instance.insertActivity(
+          widget.plantId!,
+          'pruning',
+          today,
+        );
+      }
+      if (transfer) {
+        await PlantCareDatabase.instance.insertActivity(
+          widget.plantId!,
+          'transfer',
+          today,
+        );
       }
     }
 

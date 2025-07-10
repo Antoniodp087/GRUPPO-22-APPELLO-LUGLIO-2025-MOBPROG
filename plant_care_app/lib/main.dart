@@ -5,6 +5,7 @@ import 'package:plant_care_app/screens/mobile/n_m_category_mobile.dart';
 import 'package:plant_care_app/screens/mobile/n_m_plant_mobile.dart';
 import 'package:plant_care_app/screens/other_device/n_m_category.dart';
 import 'package:plant_care_app/screens/other_device/n_m_plant.dart';
+import 'package:plant_care_app/utils/chart/bar_chart_activities.dart';
 import 'package:sqflite_common_ffi/sqflite_ffi.dart';
 
 void main() async {

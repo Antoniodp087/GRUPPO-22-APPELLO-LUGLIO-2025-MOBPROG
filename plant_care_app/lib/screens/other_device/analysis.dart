@@ -14,9 +14,9 @@ class Analysis extends StatelessWidget {
       child: Column(
         children: [
           TotalPlant(),
-          Container(height: 600, width: 600, child: AppPieChart()),
+          AppPieChart(),
           BarChartPlanted(),
-
+          ActivityBarChart(),
           AnalysisStatus(),
         ],
       ),

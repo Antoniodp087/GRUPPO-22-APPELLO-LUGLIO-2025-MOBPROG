@@ -6,10 +6,10 @@ class BarChartPlanted extends StatefulWidget {
   const BarChartPlanted({super.key});
 
   @override
-  State<BarChartPlanted> createState() => _AppBarChartState();
+  State<BarChartPlanted> createState() => _BarChartPlantedState();
 }
 
-class _AppBarChartState extends State<BarChartPlanted> {
+class _BarChartPlantedState extends State<BarChartPlanted> {
   List<BarChartGroupData> _barGroups = [];
   List<int> plantsPerMonth = List.filled(12, 0);
   bool isLoading = true;
@@ -24,23 +24,31 @@ class _AppBarChartState extends State<BarChartPlanted> {
     final data = await PlantCareDatabase.instance.getPlantsPerMonth();
     List<BarChartGroupData> groups = [];
 
+    // Reset count
+    plantsPerMonth = List.filled(12, 0);
+
     for (var entry in data) {
-      int month = int.tryParse(entry['month'] ?? '0') ?? 0;
+      int rawMonth = int.tryParse(entry['month'] ?? '0') ?? 0;
+      int monthIndex = rawMonth - 1; // da 1-12 a 0-11
       int count = entry['count'] ?? 0;
 
-      groups.add(
-        BarChartGroupData(
-          x: month,
-          barRods: [
-            BarChartRodData(
-              toY: count.toDouble(),
-              color: Colors.green,
-              width: 16,
-              borderRadius: BorderRadius.circular(4),
-            ),
-          ],
-        ),
-      );
+      if (monthIndex >= 0 && monthIndex < 12) {
+        plantsPerMonth[monthIndex] = count;
+
+        groups.add(
+          BarChartGroupData(
+            x: monthIndex,
+            barRods: [
+              BarChartRodData(
+                toY: count.toDouble(),
+                color: Colors.green,
+                width: 16,
+                borderRadius: BorderRadius.circular(4),
+              ),
+            ],
+          ),
+        );
+      }
     }
 
     setState(() {
@@ -66,59 +74,65 @@ class _AppBarChartState extends State<BarChartPlanted> {
       'Dic',
     ];
     final maxCount = plantsPerMonth.reduce((a, b) => a > b ? a : b);
+
     return isLoading
         ? const Center(child: CircularProgressIndicator())
-        : Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: [
-            const Text(
-              'Piante piantate per mese',
-              style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
-            ),
-            const SizedBox(height: 16),
-            SizedBox(
-              height: 400,
-              width: 400,
-              child: BarChart(
-                BarChartData(
-                  maxY: (maxCount + 2).toDouble(),
-                  barGroups: _barGroups,
-                  titlesData: FlTitlesData(
-                    bottomTitles: AxisTitles(
-                      sideTitles: SideTitles(
-                        showTitles: true,
-                        reservedSize: 32,
-                        getTitlesWidget: (value, meta) {
-                          final int index = value.toInt();
-                          return SideTitleWidget(
-                            meta: meta,
-                            space: 6,
-                            child: Text(
-                              (index >= 0 && index < months.length)
-                                  ? months[index]
-                                  : '',
-                              style: const TextStyle(fontSize: 10),
-                            ),
-                          );
-                        },
-                      ),
-                    ),
-                    leftTitles: AxisTitles(
-                      sideTitles: SideTitles(showTitles: true),
-                    ),
-                    rightTitles: AxisTitles(
-                      sideTitles: SideTitles(showTitles: false),
-                    ),
-                    topTitles: AxisTitles(
-                      sideTitles: SideTitles(showTitles: false),
+        : SizedBox(
+          width: 370,
+          height: 700,
+          child: Expanded(
+            child: BarChart(
+              BarChartData(
+                maxY: (maxCount + 1).toDouble(),
+                barGroups: _barGroups,
+                titlesData: FlTitlesData(
+                  bottomTitles: AxisTitles(
+                    sideTitles: SideTitles(
+                      showTitles: true,
+                      reservedSize: 32,
+                      getTitlesWidget: (value, meta) {
+                        final int index = value.toInt();
+                        return SideTitleWidget(
+                          meta: meta,
+                          space: 6,
+                          child: Text(
+                            (index >= 0 && index < months.length)
+                                ? months[index]
+                                : '',
+                            style: const TextStyle(fontSize: 10),
+                          ),
+                        );
+                      },
                     ),
                   ),
-                  gridData: FlGridData(show: true),
-                  borderData: FlBorderData(show: false),
+                  leftTitles: AxisTitles(
+                    sideTitles: SideTitles(
+                      showTitles: true,
+                      interval: 1,
+                      reservedSize: 32,
+                      getTitlesWidget: (value, meta) {
+                        return SideTitleWidget(
+                          meta: meta,
+                          child: Text(
+                            value.toInt().toString(),
+                            style: const TextStyle(fontSize: 10),
+                          ),
+                        );
+                      },
+                    ),
+                  ),
+                  rightTitles: const AxisTitles(
+                    sideTitles: SideTitles(showTitles: false),
+                  ),
+                  topTitles: const AxisTitles(
+                    sideTitles: SideTitles(showTitles: false),
+                  ),
                 ),
+                gridData: const FlGridData(show: false),
+                borderData: FlBorderData(show: false),
               ),
             ),
-          ],
+          ),
         );
   }
 }

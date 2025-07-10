@@ -55,6 +55,15 @@ class PlantCareDatabase {
         FOREIGN KEY (category_id) REFERENCES categories (id)
       )
     ''');
+    await db.execute("""
+      CREATE TABLE activities (
+        id INTEGER PRIMARY KEY AUTOINCREMENT,
+        plant_id INTEGER NOT NULL,
+        type TEXT NOT NULL, 
+        date TEXT NOT NULL,
+        FOREIGN KEY (plant_id) REFERENCES plants(id)
+      )
+    """);
   }
 
   //DATABASE INSERT ELEMENT
@@ -68,6 +77,15 @@ class PlantCareDatabase {
     return await db.insert('categories', {
       'name': name,
     }, conflictAlgorithm: ConflictAlgorithm.ignore);
+  }
+
+  Future<void> insertActivity(int plantId, String type, String date) async {
+    final db = await instance.database;
+    await db.insert('activities', {
+      'plant_id': plantId,
+      'type': type,
+      'date': date,
+    });
   }
 
   //DATABASE RETURN ELEMENT
@@ -103,6 +121,11 @@ class PlantCareDatabase {
   Future<List<Map<String, dynamic>>> getAllCategories() async {
     final db = await instance.database;
     return await db.query('categories');
+  }
+
+  Future<List<Map<String, dynamic>>> getAllActivities() async {
+    final db = await instance.database;
+    return await db.query('activities');
   }
 
   //DATABASE UPDATE ELEMENT

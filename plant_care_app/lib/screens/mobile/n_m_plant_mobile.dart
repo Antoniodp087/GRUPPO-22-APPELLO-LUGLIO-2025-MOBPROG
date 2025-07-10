@@ -116,6 +116,10 @@ class _MobileFormState extends State<MobileForm> {
       nextWateringController.text = nextWateringString;
       nextPruningController.text = nextPruningString;
       nextTransferController.text = nextTransferString;
+
+      nextWateringController.text = nextWateringString;
+      nextPruningController.text = nextPruningString;
+      nextTransferController.text = nextTransferString;
     }
 
     if (widget.plantId != null) {
