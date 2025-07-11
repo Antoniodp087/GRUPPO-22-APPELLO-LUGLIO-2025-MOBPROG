@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:plant_care_app/screens/all_component.dart';
 import 'package:plant_care_app/screens/other_device/analysis.dart';
 import 'package:plant_care_app/screens/other_device/category_home.dart';
 import 'package:plant_care_app/screens/other_device/home.dart';

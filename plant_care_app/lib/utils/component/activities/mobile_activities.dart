@@ -63,7 +63,7 @@ class MobileActivities extends StatelessWidget {
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
             AppStyle.pottedPlantEmojiMobile,
-            Text("Innaffiare ogni: ", style: AppStyle.mobileHeadLine3),
+            Text("Travasare ogni: ", style: AppStyle.mobileHeadLine3),
             Text(transferFrequency ?? "NaN ", style: AppStyle.mobileHeadLine3),
             SizedBox(width: 4),
             Text("giorni", style: AppStyle.mobileHeadLine3),

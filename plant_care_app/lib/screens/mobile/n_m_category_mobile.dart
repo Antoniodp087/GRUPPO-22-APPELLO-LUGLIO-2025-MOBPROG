@@ -58,7 +58,7 @@ class _CategoryMobileFormState extends State<CategoryMobileForm> {
     if (widget.categoryId != null) {
       title = nameController.text;
     } else {
-      title = 'Nuova pianta';
+      title = 'Nuova categoria';
     }
     return SafeArea(
       child: Scaffold(

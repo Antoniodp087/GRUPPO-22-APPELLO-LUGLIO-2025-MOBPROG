@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:plant_care_app/database/database_sqlite.dart';
 import 'package:plant_care_app/screens/mobile/plant_detail_mobile.dart';
-import 'package:plant_care_app/styles/app_style.dart';
 import 'package:plant_care_app/utils/component/card/card_mobile.dart';
 
 class SearchPageMobile extends StatefulWidget {
