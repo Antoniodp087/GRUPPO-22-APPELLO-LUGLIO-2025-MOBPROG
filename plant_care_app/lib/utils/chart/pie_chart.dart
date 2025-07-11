@@ -1,9 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:pie_chart/pie_chart.dart';
 import 'package:plant_care_app/database/database_sqlite.dart';
+import 'package:plant_care_app/styles/app_style.dart';
 
 class AppPieChart extends StatefulWidget {
-  const AppPieChart({super.key});
+  const AppPieChart({super.key, this.w, this.h});
+  final double? w;
+  final double? h;
 
   @override
   State<AppPieChart> createState() => _AppPieChartState();
@@ -48,8 +51,8 @@ class _AppPieChartState extends State<AppPieChart> {
     return isLoading
         ? const Center(child: CircularProgressIndicator())
         : SizedBox(
-          width: 350,
-          height: 700,
+          width: widget.w ?? 370,
+          height: widget.h ?? 700,
           child:
               dataMap.isEmpty
                   ? const Text("Nessuna pianta disponibile.")
@@ -59,14 +62,26 @@ class _AppPieChartState extends State<AppPieChart> {
                     chartRadius: MediaQuery.of(context).size.width / 2,
                     chartType: ChartType.ring,
                     centerText: _totalPlants.toString(),
+                    centerTextStyle: AppStyle.analysisTitle,
                     chartLegendSpacing: 32,
                     legendOptions: const LegendOptions(
+                      legendTextStyle: TextStyle(
+                        fontSize: 20,
+                        fontWeight: FontWeight.bold,
+                        color: Colors.black,
+                      ),
                       showLegends: true,
                       legendPosition: LegendPosition.right,
                     ),
                     chartValuesOptions: const ChartValuesOptions(
+                      chartValueStyle: TextStyle(
+                        fontSize: 20,
+                        fontWeight: FontWeight.bold,
+                        color: Colors.black,
+                      ),
                       showChartValuesInPercentage: true,
-                      showChartValuesOutside: true,
+                      showChartValueBackground: false,
+                      showChartValuesOutside: false,
                       decimalPlaces: 0,
                     ),
                   ),

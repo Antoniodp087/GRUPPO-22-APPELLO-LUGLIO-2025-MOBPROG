@@ -4,7 +4,9 @@ import 'package:intl/intl.dart';
 import 'package:plant_care_app/database/database_sqlite.dart';
 
 class ActivityBarChart extends StatefulWidget {
-  const ActivityBarChart({super.key});
+  const ActivityBarChart({super.key, this.w, this.h});
+  final double? w;
+  final double? h;
 
   @override
   State<ActivityBarChart> createState() => _ActivityBarChartState();
@@ -42,15 +44,20 @@ class _ActivityBarChartState extends State<ActivityBarChart> {
   @override
   Widget build(BuildContext context) {
     return SizedBox(
-      width: 370,
-      height: 700,
+      width: widget.w ?? 370,
+      height: widget.h ?? 700,
       child: Padding(
         padding: const EdgeInsets.all(16.0),
         child: BarChart(
           BarChartData(
             alignment: BarChartAlignment.spaceBetween,
             maxY: _getMaxY(),
-            barTouchData: BarTouchData(enabled: true),
+            barTouchData: BarTouchData(
+              enabled: true,
+              touchTooltipData: BarTouchTooltipData(
+                getTooltipColor: (group) => Colors.green.shade50,
+              ),
+            ),
             titlesData: FlTitlesData(
               topTitles: const AxisTitles(
                 sideTitles: SideTitles(showTitles: false),

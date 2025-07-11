@@ -3,7 +3,9 @@ import 'package:plant_care_app/database/database_sqlite.dart';
 import 'package:fl_chart/fl_chart.dart';
 
 class BarChartPlanted extends StatefulWidget {
-  const BarChartPlanted({super.key});
+  const BarChartPlanted({super.key, this.w, this.h});
+  final double? w;
+  final double? h;
 
   @override
   State<BarChartPlanted> createState() => _BarChartPlantedState();
@@ -78,11 +80,16 @@ class _BarChartPlantedState extends State<BarChartPlanted> {
     return isLoading
         ? const Center(child: CircularProgressIndicator())
         : SizedBox(
-          width: 370,
-          height: 700,
+          width: widget.w ?? 370,
+          height: widget.h ?? 700,
           child: Expanded(
             child: BarChart(
               BarChartData(
+                barTouchData: BarTouchData(
+                  touchTooltipData: BarTouchTooltipData(
+                    getTooltipColor: (group) => Colors.transparent,
+                  ),
+                ),
                 maxY: (maxCount + 1).toDouble(),
                 barGroups: _barGroups,
                 titlesData: FlTitlesData(

@@ -12,11 +12,24 @@ class AppStyle {
   static Color titleAndText = Color(0xFF050A05);
   static Color buttonText = Color(0xFFFAF1E2);
   static Color textAllert = Color(0xFFC57B58);
+  static Color analysisTextColor = Color(0xFF668964);
 
   //BACKGROUND COLOR
   static Color bgCard = Color(0xFFBEE5AA);
   static Color bgButtonNegative = Color(0xFFC57B58);
   static Color bgButtonPositive = Color(0xFF5E975B);
+
+  //ANALYSIS TEXT STYLE
+  static TextStyle analysisTitle = GoogleFonts.quicksand(
+    fontSize: 70,
+    fontWeight: FontWeight.bold,
+    color: analysisTextColor,
+  );
+  static TextStyle analysisText = GoogleFonts.quicksand(
+    fontSize: 30,
+    fontWeight: FontWeight.bold,
+    color: analysisTextColor,
+  );
 
   //TITLE TEXT STYLE
   static TextStyle headLine0 = GoogleFonts.quicksand(

@@ -71,7 +71,7 @@ class _AnalysisStatusState extends State<AnalysisStatus> {
       child: Column(
         mainAxisAlignment: MainAxisAlignment.center,
         crossAxisAlignment: CrossAxisAlignment.center,
-        children: [Text(status, style: AppStyle.headLine1), genearlEmoji],
+        children: [genearlEmoji, Text(status, style: AppStyle.analysisTitle)],
       ),
     );
   }
