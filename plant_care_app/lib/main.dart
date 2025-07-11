@@ -6,6 +6,8 @@ import 'package:plant_care_app/screens/mobile/n_m_plant_mobile.dart';
 import 'package:plant_care_app/screens/other_device/n_m_category.dart';
 import 'package:plant_care_app/screens/other_device/n_m_plant.dart';
 import 'package:sqflite_common_ffi/sqflite_ffi.dart';
+import 'package:desktop_window/desktop_window.dart';
+import 'dart:io';
 
 void main() async {
   // Inizializza sqflite_common_ffi
@@ -14,6 +16,12 @@ void main() async {
   databaseFactory = databaseFactoryFfi;
   final dbPath = await getDatabasesPath();
   print('Database : $dbPath');
+
+  WidgetsFlutterBinding.ensureInitialized();
+
+  if (Platform.isWindows || Platform.isMacOS || Platform.isLinux) {
+    await DesktopWindow.setWindowSize(const Size(610, 1000));
+  }
 
   runApp(const MainApp());
 }

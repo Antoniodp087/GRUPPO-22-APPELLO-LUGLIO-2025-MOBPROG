@@ -22,7 +22,7 @@ class _ResponsiveBaseState extends State<ResponsiveBase> {
   Widget build(BuildContext context) {
     return LayoutBuilder(
       builder: (context, constraints) {
-        if (constraints.maxWidth <= 402) {
+        if (constraints.maxWidth <= 420) {
           return BottomNavBar(currentIndex: _selectedIndex, onTap: _tabChanger);
         } else {
           return SideNavBar(currentIndex: _selectedIndex, onTap: _tabChanger);
