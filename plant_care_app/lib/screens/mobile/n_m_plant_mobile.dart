@@ -100,6 +100,7 @@ class _MobileFormState extends State<MobileForm> {
 
     // 🔍 Validazione centralizzata dei campi
 
+    if (nameController.text.trim().isEmpty) missingFields.add('Nome');
     if (immageController.text.trim().isEmpty) missingFields.add('URL immagine');
 
     if (plantedOnController.text.trim().isEmpty)

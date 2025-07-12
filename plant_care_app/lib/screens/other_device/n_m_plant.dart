@@ -99,6 +99,9 @@ class _AppFormState extends State<AppForm> {
 
     // 🔍 Validazione centralizzata dei campi
 
+    if (nameController.text.trim().isEmpty) missingFields.add('Nome');
+    if (speciesController.text.trim().isEmpty) missingFields.add('Specie');
+
     if (immageController.text.trim().isEmpty) missingFields.add('URL immagine');
 
     if (plantedOnController.text.trim().isEmpty)
