@@ -27,8 +27,14 @@ class AppDescriptionElementMobile extends StatelessWidget {
               color: AppStyle.bgCard,
               child:
                   image != null
-                      ? Image(image: image!, fit: BoxFit.cover)
-                      : const SizedBox(), // Vuoto se nessuna immagine
+                      ? Image.network(
+                        (image as NetworkImage).url,
+                        fit: BoxFit.cover,
+                        errorBuilder: (context, error, stackTrace) {
+                          return const Center(child: Icon(Icons.broken_image));
+                        },
+                      )
+                      : const SizedBox(),
             ),
           ),
           SizedBox(height: 10),

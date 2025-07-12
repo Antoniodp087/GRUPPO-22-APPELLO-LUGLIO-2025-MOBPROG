@@ -95,15 +95,63 @@ class _AppFormState extends State<AppForm> {
   }
 
   Future<void> _saveData() async {
-    String dateString = plantedOnController.text;
+    List<String> missingFields = [];
+
+    // 🔍 Validazione centralizzata dei campi
+
+    if (immageController.text.trim().isEmpty) missingFields.add('URL immagine');
+
+    if (plantedOnController.text.trim().isEmpty)
+      missingFields.add('Data di piantagione');
+
+    if (categoryChoice == 'new') {
+      if (newCategoryController.text.trim().isEmpty) {
+        missingFields.add('Nuova categoria');
+      }
+    } else if (selectedCategoryId == null) {
+      missingFields.add('Categoria');
+    }
+
+    if (wateringFrequencyController.text.trim().isEmpty)
+      missingFields.add('Frequenza di annaffiatura');
+
+    if (pruningFrequencyController.text.trim().isEmpty)
+      missingFields.add('Frequenza di potatura');
+
+    if (transferFrequencyController.text.trim().isEmpty)
+      missingFields.add('Frequenza di travaso');
+
+    if (missingFields.isNotEmpty) {
+      await showDialog(
+        context: context,
+        builder:
+            (context) => AlertDialog(
+              title: const Text('Campi mancanti'),
+              content: Column(
+                mainAxisSize: MainAxisSize.min,
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: missingFields.map((f) => Text('• $f')).toList(),
+              ),
+              actions: [
+                TextButton(
+                  onPressed: () => Navigator.pop(context),
+                  child: const Text('OK'),
+                ),
+              ],
+            ),
+      );
+      return;
+    }
 
     final formatter = DateFormat('dd/MM/yyyy');
-    final todayString = formatter.format(DateTime.now());
+    final today = DateTime.now();
+    final todayString = formatter.format(today);
+    DateTime plantedDate = formatter.parse(plantedOnController.text);
 
-    DateTime originalDate = formatter.parse(dateString);
-    DateTime nextWatering = originalDate.add(Duration(days: 2));
-    DateTime nextPruning = originalDate.add(Duration(days: 60));
-    DateTime nextTransfer = originalDate.add(Duration(days: 365));
+    DateTime nextWatering = plantedDate.add(Duration(days: 2));
+    DateTime nextPruning = plantedDate.add(Duration(days: 60));
+    DateTime nextTransfer = plantedDate.add(Duration(days: 365));
+
     String nextWateringString = formatter.format(nextWatering);
     String nextPruningString = formatter.format(nextPruning);
     String nextTransferString = formatter.format(nextTransfer);
@@ -112,9 +160,6 @@ class _AppFormState extends State<AppForm> {
       lastWateringController = plantedOnController;
       lastPruningController = plantedOnController;
       lastTransferController = plantedOnController;
-      nextWateringController.text = nextWateringString;
-      nextPruningController.text = nextPruningString;
-      nextTransferController.text = nextTransferString;
 
       nextWateringController.text = nextWateringString;
       nextPruningController.text = nextPruningString;
@@ -123,58 +168,33 @@ class _AppFormState extends State<AppForm> {
 
     if (widget.plantId != null) {
       if (watering) {
-        dateString = todayString;
-        originalDate = formatter.parse(dateString);
-        nextWatering = originalDate.add(
+        DateTime d = today;
+        nextWatering = d.add(
           Duration(days: int.parse(wateringFrequencyController.text)),
         );
         nextWateringString = formatter.format(nextWatering);
         lastWateringController = nextWateringController;
         nextWateringController.text = nextWateringString;
       }
+
       if (pruning) {
-        dateString = todayString;
-        originalDate = formatter.parse(dateString);
-        nextPruning = originalDate.add(
+        DateTime d = today;
+        nextPruning = d.add(
           Duration(days: int.parse(pruningFrequencyController.text)),
         );
         nextPruningString = formatter.format(nextPruning);
         lastPruningController = nextPruningController;
         nextPruningController.text = nextPruningString;
       }
+
       if (transfer) {
-        dateString = todayString;
-        originalDate = formatter.parse(dateString);
-        nextTransfer = originalDate.add(
+        DateTime d = today;
+        nextTransfer = d.add(
           Duration(days: int.parse(transferFrequencyController.text)),
         );
         nextTransferString = formatter.format(nextTransfer);
         lastTransferController = nextTransferController;
         nextTransferController.text = nextTransferString;
-      }
-
-      final today = DateFormat('dd/MM/yyyy').format(DateTime.now());
-
-      if (watering) {
-        await PlantCareDatabase.instance.insertActivity(
-          widget.plantId!,
-          'watering',
-          today,
-        );
-      }
-      if (pruning) {
-        await PlantCareDatabase.instance.insertActivity(
-          widget.plantId!,
-          'pruning',
-          today,
-        );
-      }
-      if (transfer) {
-        await PlantCareDatabase.instance.insertActivity(
-          widget.plantId!,
-          'transfer',
-          today,
-        );
       }
     }
 
@@ -183,8 +203,6 @@ class _AppFormState extends State<AppForm> {
     if (categoryChoice == 'new' &&
         newCategoryController.text.trim().isNotEmpty) {
       final name = newCategoryController.text.trim();
-
-      // Controlla se già esiste
       final existing = _categories.firstWhere(
         (cat) => cat['name'].toString().toLowerCase() == name.toLowerCase(),
         orElse: () => {},
@@ -213,26 +231,21 @@ class _AppFormState extends State<AppForm> {
       }
     }
 
-    // Calcolo status
-    final now = DateTime.now();
+    // Calcolo dello status
     int overdueCount = 0;
-
     final wateringDate = parseGgMmAaaa(nextWateringController.text);
     final pruningDate = parseGgMmAaaa(nextPruningController.text);
     final transferDate = parseGgMmAaaa(nextTransferController.text);
 
-    if (wateringDate != null && wateringDate.isBefore(now)) overdueCount++;
-    if (pruningDate != null && pruningDate.isBefore(now)) overdueCount++;
-    if (transferDate != null && transferDate.isBefore(now)) overdueCount++;
+    if (wateringDate != null && wateringDate.isBefore(today)) overdueCount++;
+    if (pruningDate != null && pruningDate.isBefore(today)) overdueCount++;
+    if (transferDate != null && transferDate.isBefore(today)) overdueCount++;
 
-    String status;
-    if (overdueCount >= 2) {
-      status = 'malata';
-    } else if (overdueCount == 1) {
-      status = 'da controllare';
-    } else {
-      status = 'sana';
-    }
+    String status = switch (overdueCount) {
+      >= 2 => 'malata',
+      1 => 'da controllare',
+      _ => 'sana',
+    };
 
     final data = {
       'name': nameController.text,
@@ -254,6 +267,7 @@ class _AppFormState extends State<AppForm> {
       'note': noteController.text,
     };
 
+    // Salvataggio
     if (widget.plantId != null) {
       await PlantCareDatabase.instance.updatePlant(widget.plantId!, data);
     } else {
@@ -263,7 +277,9 @@ class _AppFormState extends State<AppForm> {
     // Esporta JSON aggiornato
     await JsonExporter.instance.exportToJson();
 
-    if (context.mounted) Navigator.pushReplacementNamed(context, '/');
+    if (context.mounted) {
+      Navigator.pushReplacementNamed(context, '/');
+    }
   }
 
   Future<void> _pickDate() async {
