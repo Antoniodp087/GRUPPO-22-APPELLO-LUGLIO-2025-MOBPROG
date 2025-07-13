@@ -10,10 +10,15 @@ class JsonExporter {
   Future<void> exportToJson() async {
     final plants = await PlantCareDatabase.instance.getAllPlants();
     final categories = await PlantCareDatabase.instance.getAllCategories();
+    final activities = await PlantCareDatabase.instance.getAllActivities();
     //COMBINE TABLE IN ONE JSON
-    final combined = {'plants': plants, 'categories': categories};
+    final combined = {
+      'plants': plants,
+      'categories': categories,
+      'activities': activities,
+    };
 
-    final jsonString = jsonEncode(combined);
+    final jsonString = JsonEncoder.withIndent('  ').convert(combined);
 
     final directory = await getApplicationDocumentsDirectory();
     final subDirectory = Directory('${directory.path}/salvataggiJson');
