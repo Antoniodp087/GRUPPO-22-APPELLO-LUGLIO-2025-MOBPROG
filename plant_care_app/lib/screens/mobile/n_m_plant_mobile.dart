@@ -107,8 +107,36 @@ class _MobileFormState extends State<MobileForm> {
       missingFields.add('Data di piantagione');
 
     if (categoryChoice == 'new') {
-      if (newCategoryController.text.trim().isEmpty) {
+      final newCategoryName = newCategoryController.text.trim();
+
+      if (newCategoryName.isEmpty) {
         missingFields.add('Nuova categoria');
+      } else {
+        final alreadyExists = _categories.any(
+          (cat) =>
+              cat['name'].toString().toLowerCase() ==
+              newCategoryName.toLowerCase(),
+        );
+
+        if (alreadyExists) {
+          await showDialog(
+            context: context,
+            builder:
+                (context) => AlertDialog(
+                  title: const Text('Categoria già esistente'),
+                  content: Text(
+                    'La categoria "$newCategoryName" esiste già. Scegli un nome diverso.',
+                  ),
+                  actions: [
+                    TextButton(
+                      onPressed: () => Navigator.pop(context),
+                      child: const Text('OK'),
+                    ),
+                  ],
+                ),
+          );
+          return; // blocca il salvataggio
+        }
       }
     } else if (selectedCategoryId == null) {
       missingFields.add('Categoria');

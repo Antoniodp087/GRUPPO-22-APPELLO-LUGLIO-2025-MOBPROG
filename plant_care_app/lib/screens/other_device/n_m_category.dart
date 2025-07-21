@@ -31,18 +31,62 @@ class _CategoryFormState extends State<CategoryForm> {
   }
 
   Future<void> _saveData() async {
-    final data = nameController.text;
+    final inputName = nameController.text.trim();
 
-    if (widget.categoryId != null) {
-      await PlantCareDatabase.instance.updateCategory(widget.categoryId!, data);
-    } else {
-      await PlantCareDatabase.instance.insertCategory(data);
+    if (inputName.isEmpty) {
+      _showAlertDialog('Errore', 'Il campo categoria non può essere vuoto.');
+      return;
     }
 
-    // Esporta JSON aggiornato
+    // Recupera tutte le categorie esistenti
+    final existingCategories =
+        await PlantCareDatabase.instance.getAllCategories();
+    final inputNameLower = inputName.toLowerCase();
+
+    final exists = existingCategories.any((category) {
+      final categoryName = (category['name'] ?? '').toString().toLowerCase();
+      final categoryId = category['id'];
+
+      // Controlla se esiste un'altra categoria con lo stesso nome
+      return categoryName == inputNameLower &&
+          categoryId != widget.categoryId; // Esclude la categoria in modifica
+    });
+
+    if (exists) {
+      _showAlertDialog('Categoria Esistente', 'Questa categoria esiste già.');
+      return;
+    }
+
+    if (widget.categoryId != null) {
+      await PlantCareDatabase.instance.updateCategory(
+        widget.categoryId!,
+        inputName,
+      );
+    } else {
+      await PlantCareDatabase.instance.insertCategory(inputName);
+    }
+
     await JsonExporter.instance.exportToJson();
 
     if (context.mounted) Navigator.pop(context);
+  }
+
+  Future<void> _showAlertDialog(String title, String message) async {
+    return showDialog<void>(
+      context: context,
+      builder: (BuildContext context) {
+        return AlertDialog(
+          title: Text(title),
+          content: Text(message),
+          actions: <Widget>[
+            TextButton(
+              child: const Text('OK'),
+              onPressed: () => Navigator.of(context).pop(),
+            ),
+          ],
+        );
+      },
+    );
   }
 
   Future<void> _exit() async {
